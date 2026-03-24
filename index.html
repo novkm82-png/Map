@@ -10,73 +10,52 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;height:100%;overflow:hidden;background:#f0eaf8}
 #map{position:fixed;inset:0;z-index:1}
-.leaflet-tile{filter:saturate(0.5) brightness(1.05) contrast(0.88) sepia(0.06)!important;opacity:0.93!important}
+.leaflet-tile{filter:saturate(0.48) brightness(1.06) contrast(0.87) sepia(0.06)!important;opacity:0.93!important}
 .leaflet-control-zoom{border:none!important;border-radius:12px!important;box-shadow:0 2px 12px rgba(140,90,180,0.2)!important}
 .leaflet-control-zoom a{background:rgba(255,250,255,0.92)!important;color:#8a50b8!important;border:none!important;font-weight:700;border-bottom:1px solid rgba(180,140,210,0.2)!important}
 .leaflet-control-zoom a:hover{background:rgba(240,228,255,0.97)!important}
 .leaflet-control-attribution{background:rgba(255,252,255,0.7)!important;color:#c0a0d8!important;font-size:9px}
-
 #header{position:fixed;top:0;left:0;right:0;z-index:1000;text-align:center;padding:8px 16px 6px;background:linear-gradient(to bottom,rgba(255,250,255,0.95) 60%,transparent);pointer-events:none}
 #header h1{font-family:'Playfair Display',serif;font-size:17px;font-style:italic;color:#7a3a9a}
 #header p{font-size:10px;color:#b090c8;letter-spacing:1px;margin-top:1px}
-
-/* Butterflies */
 .bf{position:fixed;z-index:999;pointer-events:none;animation:flutter 6s ease-in-out infinite;opacity:0.55}
 @keyframes flutter{0%,100%{transform:translateY(0) rotate(-5deg)}25%{transform:translateY(-9px) rotate(5deg)}75%{transform:translateY(-11px) rotate(8deg)}}
-
-/* Resort pie */
 .resort-marker{cursor:pointer;filter:drop-shadow(0 3px 10px rgba(150,80,200,0.3));transition:transform 0.2s,filter 0.2s;animation:softpulse 4s ease-in-out infinite}
 .resort-marker:hover{transform:scale(1.16);animation:none;filter:drop-shadow(0 5px 16px rgba(150,80,200,0.5))}
 @keyframes softpulse{0%,100%{opacity:0.88}50%{opacity:1}}
 .resort-lbl{background:none!important;border:none!important;font-family:'Playfair Display',serif;color:#6a2888;font-size:11px;font-weight:700;font-style:italic;white-space:nowrap;text-shadow:1px 1px 0 rgba(255,250,255,0.96),-1px -1px 0 rgba(255,250,255,0.96),0 0 10px rgba(255,250,255,0.9);pointer-events:none}
 
-/* 3D Landmark icon — TRUE 3D with perspective */
-.lm3d-wrap{
+/* Low-poly icon system */
+.lp{opacity:0;transform-origin:50% 100%}
+.lm.anim .lp{animation:lpIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both}
+.lm.anim .lpb{animation:lpBird 2.2s ease-in-out both}
+@keyframes lpIn{
+  from{opacity:0;transform:scale(0) rotate(-15deg)}
+  65%{transform:scale(1.1) rotate(3deg);opacity:1}
+  to{opacity:1;transform:scale(1) rotate(0)}
+}
+@keyframes lpBird{
+  0%{opacity:0;transform:translate(-24px,4px)}
+  12%{opacity:1}
+  50%{transform:translate(0,-16px)}
+  88%{opacity:1}
+  100%{opacity:0;transform:translate(26px,4px)}
+}
+.lm{
   cursor:pointer;
-  width:80px;height:80px;
-  perspective:200px;
-  transform-style:preserve-3d;
-  transition:transform 0.3s;
+  filter:drop-shadow(0 7px 16px rgba(100,70,160,0.3)) drop-shadow(0 2px 4px rgba(100,70,160,0.15));
+  transition:filter 0.3s,transform 0.3s;
 }
-.lm3d-inner{
-  width:80px;height:80px;
-  transform-style:preserve-3d;
-  transform:rotateX(22deg) rotateY(-8deg) rotateZ(2deg);
-  transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
-  filter:drop-shadow(0 8px 16px rgba(120,70,170,0.35)) drop-shadow(0 2px 4px rgba(120,70,170,0.2));
-  animation:lm3dfloat 5s ease-in-out infinite;
-}
-.lm3d-wrap:hover .lm3d-inner{
-  transform:rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1.18);
-  filter:drop-shadow(0 14px 28px rgba(120,70,170,0.5)) drop-shadow(0 0 20px rgba(200,150,240,0.35));
-  animation:none;
-}
-@keyframes lm3dfloat{
-  0%,100%{transform:rotateX(22deg) rotateY(-8deg) rotateZ(2deg) translateY(0)}
-  50%{transform:rotateX(22deg) rotateY(-8deg) rotateZ(2deg) translateY(-6px)}
+.lm:hover{
+  filter:drop-shadow(0 12px 26px rgba(100,70,160,0.48)) drop-shadow(0 0 22px rgba(200,150,240,0.32));
+  transform:translateY(-5px) scale(1.07);
 }
 
-/* SVG animations */
-@keyframes sunmove{0%{transform:translateX(-10px)}50%{transform:translateX(10px)}100%{transform:translateX(-10px)}}
-@keyframes birdfly{0%{transform:translateX(-24px) translateY(0)}45%{transform:translateX(8px) translateY(-7px)}90%{transform:translateX(36px) translateY(1px)}100%{transform:translateX(-24px) translateY(0)}}
-@keyframes birdfly2{0%{transform:translateX(-36px) translateY(0)}50%{transform:translateX(18px) translateY(-9px)}100%{transform:translateX(-36px) translateY(0)}}
-@keyframes wavemove{0%{transform:translateX(0)}100%{transform:translateX(-24px)}}
-@keyframes steam{0%{opacity:0;transform:translateY(0) scale(1)}40%{opacity:0.7}100%{opacity:0;transform:translateY(-18px) scale(1.5)}}
-@keyframes leafsway{0%,100%{transform-origin:bottom center;transform:rotate(-6deg)}50%{transform-origin:bottom center;transform:rotate(6deg)}}
-@keyframes petalopen{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
-@keyframes snowglint{0%,100%{opacity:0.65}50%{opacity:1}}
-@keyframes volcfire{0%,100%{transform:scale(1) translateY(0)}50%{transform:scale(1.18) translateY(-4px)}}
-@keyframes ripple{0%{r:3;opacity:0.85}100%{r:14;opacity:0}}
-@keyframes fountainjet{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.14)}}
-@keyframes flagwave{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
-
-/* City labels */
 .clbl{background:none!important;border:none!important;font-family:'Lora',serif;color:#9070a8;font-size:10px;white-space:nowrap;text-shadow:1px 1px 0 rgba(255,250,255,0.95),-1px -1px 0 rgba(255,250,255,0.95);pointer-events:none}
 .clbl.big{color:#5a3878;font-weight:600}
 .cdot{width:4px;height:4px;background:#c8a0e0;border-radius:50%}
 .cdot.big{width:6px;height:6px;background:#9068b0}
 
-/* Panel */
 #panel{position:fixed;bottom:0;left:0;right:0;z-index:2000;background:linear-gradient(160deg,rgba(255,252,255,0.99),rgba(250,244,255,0.99));border-top:2px solid rgba(200,155,230,0.28);border-radius:20px 20px 0 0;transform:translateY(100%);transition:transform 0.38s cubic-bezier(0.32,0.72,0,1);max-height:78vh;overflow-y:auto;box-shadow:0 -4px 24px rgba(140,90,180,0.12)}
 #panel.open{transform:translateY(0)}
 #ph{width:38px;height:4px;background:rgba(200,155,230,0.38);border-radius:2px;margin:10px auto 0;cursor:pointer}
@@ -91,14 +70,17 @@ html,body{width:100%;height:100%;overflow:hidden;background:#f0eaf8}
 .st{font-family:'Playfair Display',serif;font-size:12px;font-weight:700;color:#7a3898;letter-spacing:0.8px;text-transform:uppercase;margin:12px 0 6px}
 .st::before{content:'✿ ';color:#c088d8}
 .sc{background:rgba(248,238,255,0.7);border:1px solid rgba(200,155,230,0.2);border-radius:10px;padding:10px 12px;margin-bottom:7px}
+.sc a{text-decoration:none;color:inherit;display:block}
+.sc:hover{background:rgba(240,226,255,0.85)}
 .sn{font-size:12px;font-weight:600;color:#6a3880;line-height:1.3}
 .sr{display:flex;align-items:center;gap:4px;margin-top:3px;font-size:11px}
 .rat{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:#9a58b8}
 .rsrc{font-size:9px;color:#c098d8}
 .snote{font-size:11px;color:#a080b8;margin-top:4px;line-height:1.4}
+.slink{font-size:10px;color:#9a58b8;margin-top:5px;display:flex;align-items:center;gap:3px}
+.slink::before{content:'→';font-size:12px}
 .hw{font-size:12px;color:#a080b8;line-height:1.55;padding:8px 12px;background:rgba(200,165,228,0.07);border:1px solid rgba(200,155,230,0.14);border-radius:8px;margin-top:8px}
 .fbadge{display:inline-block;background:rgba(200,155,230,0.18);border:1px solid rgba(200,155,230,0.38);border-radius:10px;padding:2px 8px;font-size:10px;color:#9a68b8;margin-left:6px}
-
 #legend{position:fixed;bottom:16px;left:12px;z-index:1000;background:rgba(255,252,255,0.94);border:1px solid rgba(200,155,230,0.26);border-radius:12px;padding:8px 10px;box-shadow:0 2px 10px rgba(140,90,180,0.09);max-width:198px}
 #ltog{font-family:'Playfair Display',serif;font-size:11px;color:#7a3898;letter-spacing:0.8px;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:4px;user-select:none}
 #ltog::after{content:'▲';font-size:8px;transition:transform 0.2s}
@@ -107,22 +89,17 @@ html,body{width:100%;height:100%;overflow:hidden;background:#f0eaf8}
 #lbody.h{display:none}
 .li{display:flex;align-items:center;gap:6px;font-size:10px;color:#9a70b8;padding:2px 0}
 .lc{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-
 #toast{position:fixed;top:68px;left:50%;transform:translateX(-50%) translateY(-16px);z-index:3000;background:rgba(255,252,255,0.96);border:1px solid rgba(200,155,230,0.33);border-radius:20px;padding:7px 16px;font-size:12px;color:#8a58a8;opacity:0;pointer-events:none;transition:opacity 0.3s,transform 0.3s;white-space:nowrap;box-shadow:0 2px 12px rgba(140,90,180,0.1)}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
-
-<!-- Бабочки -->
 <svg class="bf" style="left:7%;top:46px;width:18px;animation-delay:0s" viewBox="0 0 20 16"><path d="M10,8 Q5,2 1,4 Q3,8 5,9 Q3,12 1,12 Q5,14 10,8Z" fill="#d4a0f0"/><path d="M10,8 Q15,2 19,4 Q17,8 15,9 Q17,12 19,12 Q15,14 10,8Z" fill="#c080e8"/></svg>
 <svg class="bf" style="left:26%;top:50px;width:13px;animation-delay:1.5s" viewBox="0 0 20 16"><path d="M10,8 Q5,2 1,4 Q3,8 5,9 Q3,12 1,12 Q5,14 10,8Z" fill="#f0b0e0"/><path d="M10,8 Q15,2 19,4 Q17,8 15,9 Q17,12 19,12 Q15,14 10,8Z" fill="#e898d0"/></svg>
 <svg class="bf" style="right:10%;top:44px;width:15px;animation-delay:0.8s" viewBox="0 0 20 16"><path d="M10,8 Q5,2 1,4 Q3,8 5,9 Q3,12 1,12 Q5,14 10,8Z" fill="#a8d8f8"/><path d="M10,8 Q15,2 19,4 Q17,8 15,9 Q17,12 19,12 Q15,14 10,8Z" fill="#90c8f0"/></svg>
 <svg class="bf" style="right:34%;top:52px;width:11px;animation-delay:2.2s" viewBox="0 0 20 16"><path d="M10,8 Q5,2 1,4 Q3,8 5,9 Q3,12 1,12 Q5,14 10,8Z" fill="#f8d0a0"/><path d="M10,8 Q15,2 19,4 Q17,8 15,9 Q17,12 19,12 Q15,14 10,8Z" fill="#f0b880"/></svg>
-
 <div id="header"><h1>🌸 Карта Курортов России и Мира 🌸</h1><p>Интерактивная карта санаторно-курортных зон</p></div>
 <div id="map"></div>
-
 <div id="legend"><div id="ltog">Природные факторы</div><div id="lbody">
   <div class="li"><div class="lc" style="background:#C39BD3"></div>Радоновые воды</div>
   <div class="li"><div class="lc" style="background:#FAD7A0"></div>Сероводородные воды</div>
@@ -132,118 +109,479 @@ html,body{width:100%;height:100%;overflow:hidden;background:#f0eaf8}
   <div class="li"><div class="lc" style="background:#C8D8B0"></div>Грязелечение</div>
   <div class="li"><div class="lc" style="background:#FFD4B8"></div>Термальные источники</div>
 </div></div>
-
 <div id="panel"><div id="ph"></div><div id="pc">✕</div><div id="pcont"></div></div>
 <div id="toast"></div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
-var F={
-  radon:{n:'Радоновые воды',c:'#C39BD3'},
-  sulfide:{n:'Сероводородные воды',c:'#FAD7A0'},
-  chloride:{n:'Хлоридно-натриевые воды',c:'#AED6F1'},
-  iodine:{n:'Йодобромные воды',c:'#F9A8C9'},
-  carbonic:{n:'Углекислые воды',c:'#A9DFBF'},
-  mud:{n:'Грязелечение',c:'#C8D8B0'},
-  thermal:{n:'Термальные источники',c:'#FFD4B8'}
+var F={radon:{n:'Радоновые воды',c:'#C39BD3'},sulfide:{n:'Сероводородные воды',c:'#FAD7A0'},chloride:{n:'Хлоридно-натриевые воды',c:'#AED6F1'},iodine:{n:'Йодобромные воды',c:'#F9A8C9'},carbonic:{n:'Углекислые воды',c:'#A9DFBF'},mud:{n:'Грязелечение',c:'#C8D8B0'},thermal:{n:'Термальные источники',c:'#FFD4B8'}};
+
+// ═══ LOW-POLY 3D ICONS (no frame, isometric style, assembly animation) ═══
+// Each element has class="lp" + animation-delay for sequential build
+// Bird has class="lpb" - appears last
+// SVG transparent background = icon is "part of map"
+
+function lp(d,fill,delay,extra){return '<path d="'+d+'" fill="'+fill+'" class="lp" style="animation-delay:'+delay+'s"'+(extra?' '+extra:'')+'/>';}
+function lpe(cx,cy,rx,ry,fill,delay){return '<ellipse cx="'+cx+'" cy="'+cy+'" rx="'+rx+'" ry="'+ry+'" fill="'+fill+'" class="lp" style="animation-delay:'+delay+'s"/>';}
+function lpr(x,y,w,h,rx,fill,delay,op){return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="'+(rx||0)+'" fill="'+fill+'"'+(op?' opacity="'+op+'"':'')+' class="lp" style="animation-delay:'+delay+'s"/>';}
+function bird(d){return '<g class="lpb" style="animation-delay:1.6s"><path d="'+d+'" fill="none" stroke="#6070a8" stroke-width="1.8" stroke-linecap="round"/></g>';}
+
+// Shadow + ground base (used by all icons)
+function base(gc,d){
+  return lpe(36,77,27,3.5,'rgba(0,0,0,0.09)',0)+
+    lp('M6,63 L66,59 L60,70 L12,74Z',gc||'#a0b878',0.08)+
+    lp('M6,63 L66,59 L66,63 L6,67Z','#b8cc90',0.1);
+}
+
+// Mountain facets (isometric: left face darker, right lighter, snow on top)
+function mtn(px,py,w,lc,rc,d){
+  var bw=w/2;
+  return lp('M'+(px-bw)+','+(py+30)+' L'+px+','+py+' L'+(px-bw/2)+','+(py+30)+'Z',lc,d)+
+    lp('M'+px+','+py+' L'+(px+bw)+','+(py+30)+' L'+(px-bw/2)+','+(py+30)+'Z',rc,d+0.05)+
+    lp('M'+(px-4)+','+(py+9)+' L'+px+','+(py-2)+' L'+(px+4)+','+(py+9)+'Z','#f0f4ff',d+0.3,' opacity="0.9"');
+}
+
+// Building (isometric box)
+function bldg(x,y,w,h,fc,sc,rc,d){
+  return lp('M'+x+','+(y+h)+' L'+x+','+y+' L'+(x+w)+','+y+' L'+(x+w)+','+(y+h)+'Z',fc,d)+
+    lp('M'+(x+w)+','+y+' L'+(x+w+8)+','+(y-6)+' L'+(x+w+8)+','+(y+h-6)+' L'+(x+w)+','+(y+h)+'Z',sc,d+0.02)+
+    lp('M'+x+','+y+' L'+(x+6)+','+(y-6)+' L'+(x+w+6)+','+(y-6)+' L'+(x+w)+','+y+'Z',rc,d+0.04);
+}
+
+var ICONS={
+// КМВ: двуглавый Эльбрус + санаторий + лаванда
+kmv:'<svg viewBox="0 0 72 80" xmlns="http://www.w3.org/2000/svg">'+
+  base('#9ab880')+
+  mtn(22,26,28,'#90b0d0','#b0cce8',0.28)+
+  mtn(38,14,36,'#7898c0','#98b8d8',0.38)+
+  bldg(44,44,18,16,'#f0d8a0','#d8b878','#f8e8c0',0.88)+
+  lpr(46,48,4,5,1,'#80c0e0',1.18,0.75)+
+  lp('M8,64 L6,57 L10,57 L12,64Z','#9878c0',1.28)+
+  lpe(9,56,3.5,5.5,'#c090e0',1.32)+
+  bird('M-2,-6 Q5,-14 12,-6')+
+'</svg>',
+
+// Подмосковье: Кремль + башни + звезда
+podmoskovye:'<svg viewBox="0 0 72 80" xmlns="http://www.w3.org/2000/svg">'+
+  base('#a8b888')+
+  lp('M8,62 L64,58 L64,62 L8,66Z','#c8b080',0.08)+
+  lp('M8,54 L22,54 L22,62 L8,62Z','#c0a870',0.28)+
+  lp('M8,42 L22,42 L22,54 L8,54Z','#c8b078',0.32)+
+  lp('M8,42 L15,30 L22,42Z','#b89858',0.36)+
+  lp('M28,48 L44,48 L44,62 L28,62Z','#c8b078',0.45)+
+  lp('M28,34 L36,20 L44,34Z','#b89858',0.5)+
+  lp('M50,54 L62,54 L62,62 L50,62Z','#c0a870',0.55)+
+  lp('M50,42 L62,42 L62,54 L50,54Z','#c8b078',0.58)+
+  lp('M50,42 L56,30 L62,42Z','#b89858',0.62)+
+  '<polygon points="36,16 37.5,20.5 42,20.5 38.5,23 40,28 36,25 32,28 33.5,23 30,20.5 34.5,20.5" fill="#f8b820" class="lp" style="animation-delay:0.9s"/>'+
+  lpr(32,34,8,6,1,'#b0d8f0',1.1,0.8)+
+  lpe(8,68,5,7,'#f0a0c0',1.28)+
+  lpe(64,68,5,7,'#c8a0e0',1.32)+
+  bird('M-2,-6 Q5,-14 12,-6')+
+'</svg>',
+
+// Сочи: пальма + море + закат
+sochi:'<svg viewBox="0 0 72 80" xmlns="http://www.w3.org/2000/svg">'+
+  lp('M0,54 L72,50 L72,80 L0,80Z','#38a0d0',0.08)+
+  lp('M0,58 Q12,54 24,58 Q36,62 48,58 Q60,54 72,58 L72,64 L0,64Z','rgba(255,255,255,0.45)',0.2)+
+  lp('M0,66 Q18,62 36,66 Q54,70 72,66 L72,70 L0,70Z','rgba(255,255,255,0.28)',0.25)+
+  lpe(60,18,11,11,'#ffe040',0.1,' opacity="0.9"')+
+  lpe(60,18,16,16,'rgba(255,220,60,0.2)',0.1)+
+  lp('M34,28 L36,54 L38,54 L40,28Z','#887050',0.38)+
+  lp('M36,30 Q24,20 17,24 Q26,22 36,32Z','#68a848',0.48,' style="animation-delay:0.48s;transform-origin:50% 100%"')+
+  lp('M36,30 Q48,19 55,23 Q47,21 36,32Z','#80c058',0.55)+
+  lp('M36,34 Q22,28 17,34 Q27,30 36,36Z','#60a038',0.62)+
+  lpe(10,72,5,4,'#f0a0c0',1.28)+
+  bird('M-2,-6 Q5,-14 12,-6')+
+'</svg>',
+
+// Горы (generic): для Белокурихи, Бадгастайна, Боржоми, Баньер, Экс-ле-Бен
+mountain_generic:'<svg viewBox="0 0 72 80" xmlns="http://www.w3.org/2000/svg">'+
+  base('#88b060')+
+  mtn(18,32,24,'#8aaccc','#aacce4',0.28)+
+  mtn(36,14,40,'#7090b8','#90b0d0',0.38)+
+  mtn(54,26,22,'#88a8c4','#a8c8e0',0.32)+
+  lp('M4,62 L12,46 L20,62Z','#486840',0.55)+
+  lp('M18,62 L26,44 L34,62Z','#3a5832',0.6)+
+  lp('M52,62 L60,46 L68,62Z','#486840',0.58)+
+  bird('M-2,-6 Q5,-14 12,-6')+
+'</svg>',
+
+// Термальный курорт (купальня): для Цхалтубо, Пьештяни, Баден, Бад-Халль
+thermal_spa:'<svg viewBox="0 0 72 80" xmlns="http://www.w3.org/2000/svg">'+
+  base('#90b870')+
+  bldg(14,34,44,20,'#e8d0a8','#c8b080','#f0e0c0',0.38)+
+  lp('M14,34 Q36,22 58,34Z','#d4b890',0.42)+
+  lp('M22,42 Q26,36 30,42','#b898a0',0.72,' fill="none" stroke="#b898a0" stroke-width="2" stroke-linecap="round"')+
+  lp('M38,42 Q42,36 46,42','#b898a0',0.74,' fill="none" stroke="#b898a0" stroke-width="2" stroke-linecap="round"')+
+  lpe(36,64,20,7,'#68c8d0',0.88)+
+  lpe(28,56,2.5,3.5,'rgba(130,230,235,0.65)',1.0)+
+  lpe(36,53,2,3,'rgba(130,230,235,0.6)',1.05)+
+  lpe(44,56,2.5,3.5,'rgba(130,230,235,0.58)',1.1)+
+  bird('M-2,-6 Q5,-14 12,-6')+
+'</svg>',
+
+// Лес + источник: Горячий Ключ, Друскининкай
+forest_spring:'<svg viewBox="0 0 72 80" xmlns="http://www.w3.org/2000/svg">'+
+  base('#88b060')+
+  lp('M4,62 L16,30 L28,62Z','#386840',0.28)+
+  lp('M18,62 L30,22 L42,62Z','#2c6030',0.35)+
+  lp('M42,62 L54,32 L66,62Z','#386840',0.3)+
+  lpe(36,68,18,6,'#68d8d0',0.78)+
+  lpe(30,61,3.5,4,'rgba(130,235,228,0.68)',0.9)+
+  lpe(36,58,3,4,'rgba(130,235,225,0.62)',0.95)+
+  lpe(42,61,3.5,4,'rgba(130,232,222,0.58)',1.0)+
+  lpe(8,68,5,7,'#f0a8c8',1.28)+
+  lpe(64,68,5,7,'#f8b8d0',1.32)+
+  bird('M-2,-6 Q5,-14 12,-6')+
+'</svg>',
+
+// Пляж + море: Анапа
+beach:'<svg viewBox="0 0 72 80" xmlns="http://www.w3.org/2000/svg">'+
+  lpe(60,16,10,10,'#ffe040',0.1,' opacity="0.88"')+
+  lp('M0,50 L72,46 L72,80 L0,80Z','#38b0e2',0.18)+
+  lp('M0,52 Q9,48 18,52 Q27,56 36,52 Q45,48 54,52 Q63,56 72,52 L72,58 L0,58Z','rgba(255,255,255,0.5)',0.25)+
+  lp('M0,62 Q18,58 36,62 Q54,66 72,62 L72,66 L0,66Z','rgba(255,255,255,0.3)',0.3)+
+  lp('M0,68 L72,64 L72,80 L0,80Z','#e8d888',0.35)+
+  '<g class="lp" style="animation-delay:0.8s"><path d="M18,28 Q22,22 26,28" fill="none" stroke="#485898" stroke-width="2" stroke-linecap="round"/></g>'+
+  '<g class="lp" style="animation-delay:0.85s"><path d="M30,22 Q33,17 36,22" fill="none" stroke="#485898" stroke-width="1.8" stroke-linecap="round"/></g>'+
+  '<g class="lp" style="animation-delay:0.9s"><path d="M42,16 Q44,12 46,16" fill="none" stroke="#485898" stroke-width="1.5" stroke-linecap="round"/></g>'+
+  lpe(10,62,5.5,4,'#f8a8c0',1.28)+
+  bird('M-2,-6 Q5,-14 12,-6')+
+'</svg>',
+
+// Фонтан + купол: Старая Русса, Виши
+fountain_dome:'<svg viewBox="0 0 72 80" xmlns="http://www.w3.org/2000/svg">'+
+  base('#98b878')+
+  lp('M52,44 L52,30 L66,30 L66,62 L52,62Z','#dcc890',0.38)+
+  lpe(59,30,10,14,'#c8a068',0.42)+
+  lpr(55,12,8,14,1,'#c8a068',0.5)+
+  lpe(59,12,7,9,'#d4a820',0.58)+
+  lp('M33,62 L39,62 L39,80 L33,80Z','#88c0e0',0.68)+
+  lp('M39,62 Q29,44 24,26 Q28,40 30,52 L33,62Z','rgba(78,170,220,0.7)',0.75)+
+  lp('M33,62 Q43,44 48,26 Q44,40 42,52 L39,62Z','rgba(78,170,220,0.7)',0.78)+
+  lp('M24,26 Q32,10 36,6 Q40,10 48,26','rgba(68,165,220,0.82)',0.82,' fill="none" stroke="rgba(68,165,220,0.82)" stroke-width="2.5"')+
+  lpe(36,4,6,7,'rgba(68,195,245,0.85)',0.88)+
+  lpe(36,72,12,5,'#55b0e0',0.95)+
+  lpe(8,70,5,7,'#c0a0e0',1.28)+
+  bird('M-2,-6 Q5,-14 12,-6')+
+'</svg>',
+
+// Замок на скале + море: Крым (Ласточкино гнездо)
+cliff_castle:'<svg viewBox="0 0 72 80" xmlns="http://www.w3.org/2000/svg">'+
+  lp('M0,54 L72,50 L72,80 L0,80Z','#28a0d8',0.15)+
+  lp('M0,56 Q9,52 18,56 Q27,60 36,56 Q45,52 54,56 Q63,60 72,56 L72,62 L0,62Z','rgba(255,255,255,0.5)',0.22)+
+  lp('M16,54 L24,38 L30,40 L38,20 L46,38 L54,32 L56,54Z','#c4b890',0.32)+
+  bldg(22,32,22,22,'#e0c888','#c8a860','#f0dca0',0.52)+
+  lpr(24,24,6,10,1,'#e8d090',0.65)+
+  lpr(36,26,8,10,1,'#e8d090',0.68)+
+  lpr(24,32,4,5,0,'#b0d8f0',0.85,0.7)+
+  lpr(36,34,4,5,0,'#b0d8f0',0.88,0.7)+
+  lp('M48,54 L52,28 Q52,20 56,16 Q60,20 60,28 L64,54Z','#2a5020',0.58)+
+  lpe(8,64,5,4.5,'#f08090',1.28)+
+  bird('M-2,-6 Q5,-14 12,-6')+
+'</svg>',
+
+// Берёзы + залив: Сестрорецк
+birch_water:'<svg viewBox="0 0 72 80" xmlns="http://www.w3.org/2000/svg">'+
+  base('#98b878')+
+  lp('M0,56 L72,52 L72,80 L0,80Z','#68b8d8',0.22)+
+  lp('M0,58 Q18,54 36,58 Q54,62 72,58 L72,64 L0,64Z','rgba(255,255,255,0.42)',0.28)+
+  lpr(14,22,5,38,0,'#f0ece0',0.38)+
+  lp('M8,22 Q16,6 20,12 Q24,18 20,30 Q16,10 8,22Z','#78c058',0.48)+
+  lp('M12,32 Q18,20 22,26 Q18,22 12,32Z','#60a040',0.52)+
+  lpr(50,18,5,38,0,'#f0ece0',0.42)+
+  lp('M44,18 Q52,3 56,9 Q60,15 56,27 Q52,7 44,18Z','#88c868',0.55)+
+  lp('M46,30 Q52,18 56,24 Q52,20 46,30Z','#70b050',0.58)+
+  '<rect x="15" y="34" width="3" height="2" rx="1" fill="#282018" opacity="0.6" class="lp" style="animation-delay:0.72s"/>'+
+  '<rect x="51" y="30" width="3" height="2" rx="1" fill="#282018" opacity="0.6" class="lp" style="animation-delay:0.75s"/>'+
+  lpe(8,66,5,7,'#f0a8c0',1.28)+
+  lpe(64,66,5,7,'#e8a0b8',1.32)+
+  bird('M-2,-6 Q5,-14 12,-6')+
+'</svg>',
+
+// Степное озеро: Оз.Шира, Тинаки
+steppe_lake:'<svg viewBox="0 0 72 80" xmlns="http://www.w3.org/2000/svg">'+
+  base('#c8c890')+
+  lpe(64,18,10,10,'#ffe040',0.08,' opacity="0.82"')+
+  lpe(36,52,30,16,'#d0ccc8',0.28)+
+  lpe(36,52,24,12,'#c8c4c0',0.32)+
+  lp('M12,50 Q18,40 22,44 Q26,40 30,52Z','#a09880',0.45)+
+  lp('M42,50 Q48,40 52,44 Q56,40 60,50Z','#a09880',0.48)+
+  lp('M6,52 Q10,46 14,52','#8a9860',0.6,' fill="none" stroke="#8a9860" stroke-width="2.5" stroke-linecap="round"')+
+  lp('M56,50 Q60,44 64,50','#8a9860',0.62,' fill="none" stroke="#8a9860" stroke-width="2.5" stroke-linecap="round"')+
+  lp('M14,50 Q22,46 36,50 Q50,46 58,50','rgba(255,255,255,0.55)',0.55,' fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="2"')+
+  lpe(8,68,5,6.5,'#f0c060',1.28)+
+  lpe(64,68,5,6.5,'#e8b850',1.32)+
+  bird('M-2,-6 Q5,-14 12,-6')+
+'</svg>',
+
+// Горное озеро: Увильды, Якты-Куль, Экс-ле-Бен, Сирмионе
+mountain_lake:'<svg viewBox="0 0 72 80" xmlns="http://www.w3.org/2000/svg">'+
+  base('#98b070')+
+  mtn(16,22,26,'#98b8d0','#b8d0e8',0.28)+
+  mtn(40,12,36,'#7898c0','#98b8d8',0.35)+
+  mtn(58,20,20,'#90b0cc','#b0cce4',0.3)+
+  lp('M0,52 L72,48 L72,80 L0,80Z','#48a8d8',0.55)+
+  lp('M0,54 Q9,50 18,54 Q27,58 36,54 Q45,50 54,54 Q63,58 72,54 L72,60 L0,60Z','rgba(255,255,255,0.5)',0.62)+
+  lp('M0,64 Q18,60 36,64 Q54,68 72,64','rgba(255,255,255,0.3)',0.65,' fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.8"')+
+  lp('M4,50 L10,30 L16,50Z','#2e5838',0.75)+
+  lp('M60,50 L66,30 L72,50Z','#2e5838',0.78)+
+  bird('M-2,-6 Q5,-14 12,-6')+
+'</svg>',
+
+// Вулкан + море: Искья
+volcanic_sea:'<svg viewBox="0 0 72 80" xmlns="http://www.w3.org/2000/svg">'+
+  lp('M0,56 L72,52 L72,80 L0,80Z','#38a8d8',0.15)+
+  lp('M0,58 Q9,54 18,58 Q27,62 36,58 Q45,54 54,58 Q63,62 72,58 L72,64 L0,64Z','rgba(255,255,255,0.48)',0.22)+
+  lpe(36,52,28,14,'#88c070',0.32)+
+  lp('M16,52 L36,18 L56,52Z','#709058',0.38)+
+  lpe(36,18,6,6,'#e89858',0.55,' opacity="0.9"')+
+  lpe(36,18,10,10,'rgba(228,128,48,0.3)',0.58)+
+  lpe(34,12,3,4,'rgba(210,188,168,0.65)',0.7)+
+  lpe(40,8,2.5,3.5,'rgba(210,188,168,0.55)',0.75)+
+  lpe(22,58,8,4,'#58d8d0',0.88)+
+  lpe(52,60,8,4,'#68d0c8',0.9)+
+  bldg(54,34,14,16,'#d4b888','#c4a878','#e8d0a0',0.82)+
+  lpe(9,64,5,4,'#f08090',1.28)+
+  bird('M-2,-6 Q5,-14 12,-6')+
+'</svg>',
+
+// Европейский элегантный курорт: Висбаден, Бад-Наухайм, Виши, Сальсомаджоре
+elegant_spa:'<svg viewBox="0 0 72 80" xmlns="http://www.w3.org/2000/svg">'+
+  base('#a8b880')+
+  lp('M8,60 L64,56 L64,64 L8,68Z','#d0c088',0.1)+
+  bldg(10,30,52,28,'#f0e0b8','#d8c090','#f8eecc',0.38)+
+  lp('M10,30 Q36,16 62,30Z','#e8d098',0.42)+
+  lpe(36,28,6,8,'#d0c0d8',0.55)+
+  lpe(36,26,10,12,'#e8d8e8',0.55,' opacity="0.4"')+
+  lpr(15,36,8,14,1,'rgba(160,200,240,0.55)',0.72)+
+  lpr(27,36,8,14,1,'rgba(160,200,240,0.55)',0.75)+
+  lpr(39,36,8,14,1,'rgba(160,200,240,0.55)',0.78)+
+  lpr(51,36,8,14,1,'rgba(160,200,240,0.55)',0.81)+
+  lp('M28,62 L34,62 L34,78 L28,78Z','#88c0e0',0.95)+
+  lp('M34,62 Q26,52 22,40 Q26,50 28,58 L28,62Z','rgba(80,170,220,0.65)',1.0)+
+  lp('M34,62 Q42,52 46,40 Q42,50 40,58 L40,62Z','rgba(80,170,220,0.65)',1.02)+
+  lpe(8,68,5,7,'#c0a8e0',1.28)+
+  lpe(64,68,5,7,'#e8a0c0',1.32)+
+  bird('M-2,-6 Q5,-14 12,-6')+
+'</svg>',
+
+// Немецкий спа в долине: Бад-Брамбах, Бад-Эльстер, Бад-Эмс, Бад-Тельц
+german_valley:'<svg viewBox="0 0 72 80" xmlns="http://www.w3.org/2000/svg">'+
+  base('#90b068')+
+  lp('M4,62 L18,30 L28,50 L36,22 L44,48 L56,32 L68,60Z','#98c070',0.28)+
+  lp('M4,62 L18,34 L26,52 L36,26 L46,50 L56,36 L68,60Z','#78a850',0.3,' opacity="0.5"')+
+  bldg(22,38,28,22,'#e8d8b0','#c8b880','#f0e4c8',0.52)+
+  lp('M22,38 Q36,26 50,38Z','#d8c890',0.56)+
+  lpr(26,42,6,10,1,'rgba(160,200,240,0.6)',0.82)+
+  lpr(36,42,6,10,1,'rgba(160,200,240,0.6)',0.85)+
+  lp('M16,62 Q18,54 22,58','rgba(100,180,220,0.7)',0.92,' fill="none" stroke="rgba(100,180,220,0.7)" stroke-width="2.5" stroke-linecap="round"')+
+  lpe(8,66,4,6,'#f0a0c0',1.28)+
+  lpe(64,66,4,6,'#c8a8e0',1.32)+
+  bird('M-2,-6 Q5,-14 12,-6')+
+'</svg>',
+
+// Пустыня + пальма: Палм-Спрингс
+desert_palm:'<svg viewBox="0 0 72 80" xmlns="http://www.w3.org/2000/svg">'+
+  lp('M0,52 L72,48 L72,80 L0,80Z','#d8c070',0.08)+
+  lp('M0,52 L72,48 L72,52 L0,56Z','#c8a850',0.1)+
+  mtn(20,20,32,'#c8b0a0','#e0c8b0',0.28)+
+  mtn(48,16,28,'#c0a898','#d8c0b0',0.32)+
+  lpe(62,14,9,9,'#ffe040',0.15,' opacity="0.9"')+
+  lp('M36,30 L38,54 L40,54 L42,30Z','#887050',0.52)+
+  lp('M38,32 Q26,22 18,26 Q28,24 38,34Z','#68a040',0.62)+
+  lp('M38,32 Q50,21 56,25 Q48,23 38,34Z','#80b850',0.68)+
+  lp('M38,36 Q24,30 18,36 Q28,32 38,38Z','#60a030',0.74)+
+  lpe(8,70,5,6,'#f0a0c0',1.28)+
+  bird('M-2,-6 Q5,-14 12,-6')+
+'</svg>',
+
+// Японский онсэн: Атами
+japanese_onsen:'<svg viewBox="0 0 72 80" xmlns="http://www.w3.org/2000/svg">'+
+  base('#98b870')+
+  lp('M4,60 L72,56 L72,80 L4,80Z','#50a8d0',0.12)+
+  lp('M36,14 L52,56 L20,56Z','#a0c0e0',0.28)+
+  lp('M32,22 L36,12 L40,22Z','white',0.45,' opacity="0.85"')+
+  bldg(16,38,22,20,'#f0d8a8','#d8b880','#f8e8c0',0.52)+
+  lp('M16,34 Q27,26 38,34Z','#c89860',0.56)+
+  lpr(20,30,6,6,1,'#c0a860',0.6)+
+  lpr(18,42,5,8,1,'rgba(170,210,240,0.65)',0.82)+
+  lpr(27,42,5,8,1,'rgba(170,210,240,0.65)',0.85)+
+  lp('M44,44 Q46,38 44,56 Q42,50 44,44','rgba(100,175,215,0.75)',0.9,' fill="none" stroke="rgba(100,175,215,0.75)" stroke-width="2.5" stroke-linecap="round"')+
+  '<text x="50" y="46" font-size="14" class="lp" style="animation-delay:1.1s" opacity="0.8">🌸</text>'+
+  lpe(8,70,4,6,'#f0b8d0',1.28)+
+  bird('M-2,-6 Q5,-14 12,-6')+
+'</svg>'
 };
 
-// ══════════════════════════════════════════════════
-// АКВАРЕЛЬНЫЕ 3D ИКОНКИ — без рамок, с анимациями
-// ══════════════════════════════════════════════════
-var LM={
-
-// КМВ: Эльбрус (двуглавый) + нарзановый источник + лаванда
-kmv:'<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="k1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#b8e0f8" stop-opacity="0.95"/><stop offset="100%" stop-color="#d8f0e0" stop-opacity="0.7"/></linearGradient></defs><ellipse cx="40" cy="38" rx="36" ry="32" fill="url(#k1)"/><path d="M4,62 L18,28 L26,40 L34,14 L42,32 L50,14 L58,36 L66,24 L76,60Z" fill="#b0cce8" opacity="0.9"/><path d="M28,40 L34,16 L40,30" fill="white" opacity="0.85" style="animation:snowglint 3s ease-in-out infinite"/><path d="M46,34 L50,16 L54,32" fill="white" opacity="0.8" style="animation:snowglint 3.5s ease-in-out infinite;animation-delay:0.5s"/><rect x="24" y="50" width="32" height="14" fill="#eedfc8" rx="2" opacity="0.9"/><path d="M24,50 L40,40 L56,50Z" fill="#e0cc98" opacity="0.88"/><ellipse cx="40" cy="68" rx="18" ry="6" fill="#80c8f8" opacity="0.72"/><circle cx="36" cy="60" r="3.5" fill="rgba(120,200,240,0.6)" style="animation:steam 2s ease-in-out infinite"/><circle cx="43" cy="57" r="2.8" fill="rgba(120,200,240,0.5)" style="animation:steam 2.3s ease-in-out infinite;animation-delay:0.7s"/><rect x="4" y="58" width="3" height="18" fill="#9070c0" rx="1.5" opacity="0.88"/><ellipse cx="5.5" cy="58" rx="5" ry="8" fill="#c090e0" opacity="0.82" style="animation:leafsway 3s ease-in-out infinite"/><rect x="72" y="58" width="3" height="18" fill="#9070c0" rx="1.5" opacity="0.85"/><ellipse cx="73.5" cy="58" rx="4.5" ry="7" fill="#c8a8e8" opacity="0.78" style="animation:leafsway 3s ease-in-out infinite;animation-delay:0.8s"/><g style="animation:birdfly 7s ease-in-out infinite"><path d="M-4,26 Q0,20 4,26" fill="none" stroke="#5878a8" stroke-width="2" stroke-linecap="round"/></g><g style="animation:birdfly2 10s ease-in-out infinite;animation-delay:2.5s"><path d="M-6,18 Q-2,13 2,18" fill="none" stroke="#5878a8" stroke-width="1.5" stroke-linecap="round"/></g></svg>',
-
-// Подмосковье: Кремль + Иван Великий + кремлёвская звезда + цветы
-podmoskovye:'<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="p1" cx="68%" cy="18%"><stop offset="0%" stop-color="#fff8b0" stop-opacity="0.95"/><stop offset="100%" stop-color="#ffe060" stop-opacity="0"/></radialGradient></defs><ellipse cx="40" cy="38" rx="36" ry="32" fill="#f0e0f8" opacity="0.7"/><ellipse cx="60" cy="18" rx="16" ry="16" fill="url(#p1)"/><ellipse cx="60" cy="18" rx="10" ry="10" fill="#ffe040" opacity="0.88" style="animation:sunmove 9s ease-in-out infinite"/><rect x="6" y="46" width="68" height="26" fill="#d0b888" rx="1" opacity="0.92"/><rect x="6" y="36" width="14" height="12" fill="#c4a870"/><path d="M6,36 L13,22 L20,36Z" fill="#b89858"/><rect x="33" y="28" width="14" height="20" fill="#c4a870"/><path d="M33,28 L40,14 L47,28Z" fill="#b89858"/><rect x="60" y="36" width="14" height="12" fill="#c4a870"/><path d="M60,36 L67,22 L74,36Z" fill="#b89858"/><polygon points="40,10 41.5,14.5 46,14.5 42.5,17 44,22 40,19 36,22 37.5,17 34,14.5 38.5,14.5" fill="#f8b820" opacity="0.95"/><ellipse cx="40" cy="72" rx="14" ry="5" fill="#a8c8f0" opacity="0.65"/><circle cx="37" cy="66" r="2.5" fill="rgba(160,210,240,0.7)" style="animation:steam 2.2s ease-in-out infinite"/><ellipse cx="8" cy="66" rx="5" ry="7" fill="#f0a0c0" opacity="0.82" style="animation:petalopen 3s ease-in-out infinite"/><ellipse cx="72" cy="66" rx="5" ry="7" fill="#c8a0e8" opacity="0.8" style="animation:petalopen 3.5s ease-in-out infinite;animation-delay:0.6s"/><g style="animation:birdfly 9s ease-in-out infinite;animation-delay:1s"><path d="M-2,30 Q2,24 6,30" fill="none" stroke="#6878a8" stroke-width="1.8" stroke-linecap="round"/></g></svg>',
-
-// Сочи: пальма + море + закат с движущимся солнцем + чайки
-sochi:'<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="s1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffd878"/><stop offset="40%" stop-color="#f09848"/><stop offset="65%" stop-color="#70c8f0"/><stop offset="100%" stop-color="#38a0d0"/></linearGradient></defs><rect width="80" height="80" fill="url(#s1)" rx="6" opacity="0.9"/><ellipse cx="62" cy="20" rx="11" ry="11" fill="#ffe040" opacity="0.92" style="animation:sunmove 11s ease-in-out infinite"/><ellipse cx="62" cy="20" rx="16" ry="16" fill="rgba(255,220,60,0.18)" style="animation:sunmove 11s ease-in-out infinite"/><rect x="0" y="52" width="80" height="28" fill="#38a0d0" rx="0" opacity="0.9"/><path d="M0,54 Q10,50 20,54 Q30,58 40,54 Q50,50 60,54 Q70,58 80,54 L80,60 L0,60Z" fill="rgba(255,255,255,0.48)"/><path d="M0,64 Q10,60 20,64 Q30,68 40,64 Q50,60 60,64 Q70,68 80,64" fill="none" stroke="rgba(255,255,255,0.32)" stroke-width="2" style="animation:wavemove 4s linear infinite"/><rect x="38" y="28" width="5" height="26" rx="2.5" fill="#887048" opacity="0.9"/><path d="M40,30 Q28,20 20,24 Q30,22 40,32Z" fill="#68a848" opacity="0.9" style="animation:leafsway 3s ease-in-out infinite"/><path d="M40,30 Q52,19 58,23 Q50,21 40,32Z" fill="#80c058" opacity="0.9" style="animation:leafsway 3s ease-in-out infinite;animation-delay:0.6s"/><path d="M40,36 Q26,30 20,36 Q30,32 40,38Z" fill="#60a038" opacity="0.85" style="animation:leafsway 2.8s ease-in-out infinite;animation-delay:1.1s"/><ellipse cx="10" cy="74" rx="5" ry="4" fill="#f0a0c0" opacity="0.82"/><ellipse cx="70" cy="72" rx="4.5" ry="3.5" fill="#f8c0d0" opacity="0.78"/><g style="animation:birdfly 6s ease-in-out infinite"><path d="M-4,28 Q0,22 4,28" fill="none" stroke="#486090" stroke-width="2.2" stroke-linecap="round"/></g><g style="animation:birdfly2 8s ease-in-out infinite;animation-delay:1.8s"><path d="M-6,20 Q-2,15 2,20" fill="none" stroke="#486090" stroke-width="1.7" stroke-linecap="round"/></g><g style="animation:birdfly 11s ease-in-out infinite;animation-delay:4s"><path d="M-3,14 Q0,10 3,14" fill="none" stroke="#486090" stroke-width="1.3" stroke-linecap="round"/></g></svg>',
-
-// Белокуриха: Алтайские горы + лаванда + птицы + снежные шапки
-belokurikha:'<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="b1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#b8dff8" stop-opacity="0.9"/><stop offset="100%" stop-color="#d8f0e4" stop-opacity="0.65"/></linearGradient></defs><ellipse cx="40" cy="38" rx="36" ry="32" fill="url(#b1)"/><path d="M0,58 L14,22 L26,42 L38,12 L50,34 L62,16 L74,54Z" fill="#88b068" opacity="0.82"/><path d="M2,58 L14,26 L24,44 L36,16 L48,38 L60,20 L74,54Z" fill="#70a050" opacity="0.6"/><path d="M30,16 L38,14 L46,16" fill="white" opacity="0.82" style="animation:snowglint 4s ease-in-out infinite"/><path d="M56,18 L62,16 L68,18" fill="white" opacity="0.75" style="animation:snowglint 4s ease-in-out infinite;animation-delay:1s"/><rect x="3" y="56" width="3" height="20" fill="#8868b8" rx="1.5" opacity="0.9"/><ellipse cx="4.5" cy="56" rx="5" ry="9" fill="#c098e0" opacity="0.85" style="animation:leafsway 3s ease-in-out infinite"/><rect x="12" y="60" width="2.5" height="16" fill="#9070c0" rx="1" opacity="0.82"/><ellipse cx="13" cy="60" rx="4" ry="7" fill="#c8a8e8" opacity="0.8" style="animation:leafsway 3.2s ease-in-out infinite;animation-delay:0.5s"/><rect x="64" y="56" width="3" height="20" fill="#8868b8" rx="1.5" opacity="0.9"/><ellipse cx="65.5" cy="56" rx="5" ry="9" fill="#c098e0" opacity="0.82" style="animation:leafsway 3s ease-in-out infinite;animation-delay:1s"/><rect x="73" y="60" width="2.5" height="16" fill="#9070c0" rx="1" opacity="0.8"/><ellipse cx="74" cy="60" rx="4" ry="7" fill="#c8a8e8" opacity="0.76" style="animation:leafsway 3.2s ease-in-out infinite;animation-delay:1.5s"/><g style="animation:birdfly 7s ease-in-out infinite"><path d="M-5,28 Q-1,22 3,28" fill="none" stroke="#5070a8" stroke-width="2" stroke-linecap="round"/></g><g style="animation:birdfly2 9.5s ease-in-out infinite;animation-delay:2s"><path d="M-7,20 Q-3,15 1,20" fill="none" stroke="#5070a8" stroke-width="1.6" stroke-linecap="round"/></g><g style="animation:birdfly 12s ease-in-out infinite;animation-delay:4.5s"><path d="M-3,14 Q0,10 3,14" fill="none" stroke="#5070a8" stroke-width="1.2" stroke-linecap="round"/></g></svg>',
-
-// Горячий Ключ: термальный источник + ели + пар + цветы
-gorkey:'<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><ellipse cx="40" cy="38" rx="36" ry="32" fill="#daf0e8" opacity="0.78"/><path d="M2,64 L14,30 L26,64Z" fill="#386840" opacity="0.9"/><path d="M16,64 L30,22 L44,64Z" fill="#2c6030" opacity="0.92"/><path d="M44,64 L56,32 L68,64Z" fill="#386840" opacity="0.86"/><path d="M10,64 L18,38 L26,64Z" fill="#488848" opacity="0.68"/><ellipse cx="40" cy="70" rx="22" ry="7" fill="#68d8d0" opacity="0.8"/><circle cx="34" cy="60" r="4" fill="rgba(140,235,225,0.68)" style="animation:steam 1.8s ease-in-out infinite"/><circle cx="40" cy="55" r="4.5" fill="rgba(130,235,220,0.62)" style="animation:steam 2s ease-in-out infinite;animation-delay:0.4s"/><circle cx="47" cy="59" r="3.5" fill="rgba(140,230,220,0.58)" style="animation:steam 2.3s ease-in-out infinite;animation-delay:0.9s"/><circle cx="36" cy="50" r="2.5" fill="rgba(120,225,215,0.5)" style="animation:steam 2.6s ease-in-out infinite;animation-delay:1.4s"/><circle cx="40" cy="72" r="11" fill="none" stroke="rgba(80,210,200,0.28)" stroke-width="2.5" style="animation:ripple 3.5s ease-out infinite"/><ellipse cx="8" cy="68" rx="5" ry="6.5" fill="#f0a8c8" opacity="0.84" style="animation:petalopen 3s ease-in-out infinite"/><ellipse cx="72" cy="68" rx="5" ry="6.5" fill="#f8b8d0" opacity="0.8" style="animation:petalopen 3.5s ease-in-out infinite;animation-delay:0.7s"/></svg>',
-
-// Анапа: море + чайки + солнце + пляж + цветы
-anapa:'<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="a1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#98d8f8" stop-opacity="0.95"/><stop offset="55%" stop-color="#c8eeff" stop-opacity="0.9"/><stop offset="100%" stop-color="#38b0e2" stop-opacity="0.95"/></linearGradient></defs><rect width="80" height="80" fill="url(#a1)" rx="6" opacity="0.9"/><ellipse cx="64" cy="16" rx="10" ry="10" fill="#ffe040" opacity="0.9" style="animation:sunmove 13s ease-in-out infinite"/><rect x="0" y="50" width="80" height="30" fill="#30a8e0" rx="0" opacity="0.88"/><path d="M0,52 Q10,48 20,52 Q30,56 40,52 Q50,48 60,52 Q70,56 80,52 L80,58 L0,58Z" fill="rgba(255,255,255,0.52)"/><path d="M0,64 Q10,60 20,64 Q30,68 40,64 Q50,60 60,64 Q70,68 80,64" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="2" style="animation:wavemove 5s linear infinite"/><rect x="0" y="68" width="80" height="12" fill="#e8d888" rx="0" opacity="0.9"/><g style="animation:birdfly 5.5s ease-in-out infinite"><path d="M-3,22 Q2,16 7,22" fill="none" stroke="#485898" stroke-width="2.2" stroke-linecap="round"/></g><g style="animation:birdfly2 7.5s ease-in-out infinite;animation-delay:1.2s"><path d="M-5,16 Q-1,11 3,16" fill="none" stroke="#485898" stroke-width="1.8" stroke-linecap="round"/></g><g style="animation:birdfly 10s ease-in-out infinite;animation-delay:3s"><path d="M-4,10 Q-1,6 2,10" fill="none" stroke="#485898" stroke-width="1.4" stroke-linecap="round"/></g><ellipse cx="11" cy="65" rx="5.5" ry="4" fill="#f8a8c0" opacity="0.85"/><ellipse cx="69" cy="65" rx="5" ry="3.5" fill="#f0b8d0" opacity="0.8"/></svg>',
-
-// Старая Русса: Муравьёвский фонтан (главный символ) + купол церкви
-staraya_russa:'<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><ellipse cx="40" cy="38" rx="36" ry="32" fill="#d0ecf8" opacity="0.78"/><rect x="54" y="44" width="20" height="28" fill="#dcc890" rx="1" opacity="0.9"/><ellipse cx="64" cy="44" rx="10" ry="14" fill="#c8a068" opacity="0.9"/><rect x="60" y="22" width="8" height="16" fill="#c8a068" opacity="0.92"/><ellipse cx="64" cy="22" rx="7" ry="9" fill="#d4a820" opacity="0.92"/><rect x="36" y="62" width="10" height="18" rx="5" fill="#80c0e0" opacity="0.92"/><path d="M41,62 Q30,46 25,28 Q30,40 32,50 Q36,58 41,62Z" fill="rgba(80,170,220,0.72)" style="animation:fountainjet 2s ease-in-out infinite"/><path d="M41,62 Q52,46 57,28 Q52,40 50,50 Q46,58 41,62Z" fill="rgba(80,170,220,0.72)" style="animation:fountainjet 2s ease-in-out infinite;animation-delay:0.5s"/><path d="M25,28 Q33,12 41,8 Q49,12 57,28" fill="none" stroke="rgba(70,165,220,0.85)" stroke-width="3" style="animation:fountainjet 2s ease-in-out infinite"/><circle cx="41" cy="6" r="6" fill="rgba(70,200,245,0.85)" style="animation:steam 2.5s ease-in-out infinite"/><ellipse cx="41" cy="74" rx="12" ry="5" fill="#55b0e0" opacity="0.68"/><circle cx="41" cy="74" r="14" fill="none" stroke="rgba(80,180,230,0.22)" stroke-width="2.5" style="animation:ripple 4s ease-out infinite"/><ellipse cx="8" cy="70" rx="5" ry="7" fill="#c0a0e0" opacity="0.84" style="animation:leafsway 3s ease-in-out infinite"/><g style="animation:birdfly 8s ease-in-out infinite"><path d="M-5,34 Q-1,28 3,34" fill="none" stroke="#5868a8" stroke-width="1.9" stroke-linecap="round"/></g></svg>',
-
-// Крым: Ласточкино гнездо + кипарис + море + солнце
-crimea:'<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="c1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#80c8f0" stop-opacity="0.95"/><stop offset="50%" stop-color="#b0e0f8" stop-opacity="0.9"/><stop offset="100%" stop-color="#30a0d8" stop-opacity="0.95"/></linearGradient></defs><rect width="80" height="80" fill="url(#c1)" rx="6" opacity="0.9"/><ellipse cx="66" cy="18" rx="10" ry="10" fill="#ffe040" opacity="0.9" style="animation:sunmove 12s ease-in-out infinite"/><rect x="0" y="54" width="80" height="26" fill="#28a0d8" rx="0" opacity="0.9"/><path d="M0,56 Q10,52 20,56 Q30,60 40,56 Q50,52 60,56 Q70,60 80,56 L80,62 L0,62Z" fill="rgba(255,255,255,0.52)"/><path d="M0,68 Q10,64 20,68 Q30,72 40,68 Q50,64 60,68 Q70,72 80,68" fill="none" stroke="rgba(255,255,255,0.32)" stroke-width="2" style="animation:wavemove 6s linear infinite"/><rect x="8" y="34" width="28" height="22" fill="#e0c890" rx="2" opacity="0.92"/><path d="M8,34 L22,20 L36,34Z" fill="#d0b870" opacity="0.9"/><rect x="18" y="20" width="8" height="16" fill="#d0b870" opacity="0.88"/><rect x="10" y="32" width="4" height="6" fill="rgba(160,210,240,0.5)" rx="1"/><rect x="20" y="32" width="4" height="6" fill="rgba(160,210,240,0.5)" rx="1"/><path d="M54,54 L57,24 Q57,16 61,12 Q65,16 65,24 L68,54Z" fill="#284820" opacity="0.92"/><path d="M56,44 Q50,38 52,46 Q58,40 64,46 Q62,38 56,44Z" fill="#3a6030" style="animation:leafsway 2.8s ease-in-out infinite"/><path d="M56,34 Q50,28 52,36 Q58,30 64,36 Q62,28 56,34Z" fill="#346030" style="animation:leafsway 2.8s ease-in-out infinite;animation-delay:0.5s"/><ellipse cx="9" cy="66" rx="5" ry="4.5" fill="#f08890" opacity="0.88"/><ellipse cx="71" cy="64" rx="5" ry="4" fill="#f8a0b0" opacity="0.82"/><g style="animation:birdfly 7.5s ease-in-out infinite"><path d="M-3,30 Q1,24 5,30" fill="none" stroke="#486898" stroke-width="1.9" stroke-linecap="round"/></g></svg>',
-
-// Сестрорецк: белые берёзы + Финский залив + волны
-sestroretsk:'<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><ellipse cx="40" cy="38" rx="36" ry="32" fill="#d4eaf8" opacity="0.78"/><rect x="0" y="56" width="80" height="24" fill="#68b8d8" rx="0" opacity="0.85"/><path d="M0,58 Q20,54 40,58 Q60,62 80,58 L80,64 L0,64Z" fill="rgba(255,255,255,0.45)"/><path d="M0,68 Q20,64 40,68 Q60,72 80,68" fill="none" stroke="rgba(255,255,255,0.32)" stroke-width="2" style="animation:wavemove 7s linear infinite"/><rect x="14" y="22" width="6" height="36" fill="#f0ece0" opacity="0.92"/><ellipse cx="6" cy="40" rx="3.5" ry="2" fill="#282016" opacity="0.65"/><ellipse cx="17" cy="30" rx="3" ry="1.8" fill="#282016" opacity="0.62"/><ellipse cx="19" cy="48" rx="3" ry="1.8" fill="#282016" opacity="0.58"/><path d="M8,22 Q16,6 20,13 Q24,19 20,30 Q16,10 8,22Z" fill="#78c058" opacity="0.88" style="animation:leafsway 3.2s ease-in-out infinite"/><rect x="52" y="18" width="6" height="38" fill="#f0ece0" opacity="0.9"/><ellipse cx="54" cy="28" rx="3" ry="1.8" fill="#282016" opacity="0.62"/><ellipse cx="46" cy="44" rx="3" ry="1.8" fill="#282016" opacity="0.58"/><path d="M44,18 Q52,3 56,9 Q60,15 56,27 Q52,6 44,18Z" fill="#88c868" opacity="0.85" style="animation:leafsway 3.2s ease-in-out infinite;animation-delay:0.6s"/><ellipse cx="8" cy="66" rx="5" ry="7" fill="#f0a8c0" opacity="0.84" style="animation:petalopen 3.5s ease-in-out infinite"/><ellipse cx="72" cy="66" rx="5" ry="7" fill="#e8a0b8" opacity="0.8" style="animation:petalopen 3.5s ease-in-out infinite;animation-delay:1s"/><g style="animation:birdfly 8s ease-in-out infinite"><path d="M-5,28 Q-1,22 3,28" fill="none" stroke="#587090" stroke-width="1.9" stroke-linecap="round"/></g><g style="animation:birdfly2 10s ease-in-out infinite;animation-delay:2.5s"><path d="M-7,20 Q-3,15 1,20" fill="none" stroke="#587090" stroke-width="1.5" stroke-linecap="round"/></g></svg>',
-
-// Озеро Шира: хакасская степь + солёное озеро + курганы + солнце
-shira:'<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><ellipse cx="40" cy="38" rx="36" ry="32" fill="#e8f0d0" opacity="0.8"/><ellipse cx="66" cy="18" rx="11" ry="11" fill="#ffe040" opacity="0.84" style="animation:sunmove 15s ease-in-out infinite"/><ellipse cx="40" cy="52" rx="32" ry="18" fill="#d8d4d0" opacity="0.9"/><ellipse cx="40" cy="52" rx="26" ry="13" fill="#ccc8c4" opacity="0.7"/><path d="M14,50 Q26,46 40,50 Q54,46 66,50" fill="none" stroke="rgba(255,255,255,0.65)" stroke-width="2.5" style="animation:wavemove 6s linear infinite"/><path d="M18,52 Q28,48 40,52 Q52,48 62,52" fill="none" stroke="rgba(255,255,255,0.42)" stroke-width="1.8" style="animation:wavemove 9s linear infinite;animation-delay:-3s"/><path d="M6,54 Q12,44 17,48 Q21,44 26,54Z" fill="#a09880" opacity="0.82"/><path d="M54,52 Q60,42 65,46 Q69,42 74,52Z" fill="#a09880" opacity="0.78"/><path d="M3,58 Q7,52 11,58" stroke="#8a9860" stroke-width="2.8" stroke-linecap="round" fill="none" style="animation:leafsway 4s ease-in-out infinite"/><path d="M65,56 Q69,50 73,56" stroke="#8a9860" stroke-width="2.8" stroke-linecap="round" fill="none" style="animation:leafsway 4s ease-in-out infinite;animation-delay:1s"/><ellipse cx="8" cy="70" rx="5" ry="6.5" fill="#f0c060" opacity="0.84" style="animation:petalopen 4s ease-in-out infinite"/><ellipse cx="72" cy="70" rx="5" ry="6.5" fill="#e8b850" opacity="0.8" style="animation:petalopen 4.5s ease-in-out infinite;animation-delay:1.2s"/></svg>',
-
-// Увильды: кристальное озеро + уральская тайга + горы
-uvildy:'<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="u1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a0d0f0" stop-opacity="0.95"/><stop offset="100%" stop-color="#c8e8f8" stop-opacity="0.75"/></linearGradient></defs><ellipse cx="40" cy="38" rx="36" ry="32" fill="url(#u1)"/><path d="M2,46 L14,16 L22,30 L30,8 L38,24 L46,10 L54,26 L62,14 L76,44Z" fill="#a0c8e4" opacity="0.88"/><path d="M26,12 L30,10 L34,12" fill="white" opacity="0.75" style="animation:snowglint 4s ease-in-out infinite"/><rect x="0" y="46" width="80" height="34" fill="#48a8d8" rx="0" opacity="0.88"/><path d="M0,48 Q10,44 20,48 Q30,52 40,48 Q50,44 60,48 Q70,52 80,48 L80,54 L0,54Z" fill="rgba(255,255,255,0.52)"/><path d="M0,62 Q20,58 40,62 Q60,66 80,62" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="2" style="animation:wavemove 7s linear infinite"/><path d="M2,46 L10,26 L18,46Z" fill="#286038" opacity="0.88"/><path d="M60,46 L68,24 L76,46Z" fill="#286038" opacity="0.85"/><ellipse cx="9" cy="72" rx="5" ry="7" fill="#c0a0e0" opacity="0.84" style="animation:leafsway 3.2s ease-in-out infinite"/><ellipse cx="71" cy="72" rx="5" ry="7" fill="#d0b0e8" opacity="0.8" style="animation:leafsway 3.2s ease-in-out infinite;animation-delay:0.8s"/></svg>',
-
-// Якты-Куль: горное озеро Башкортостан + закат + горы
-yakty_kul:'<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="yk1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#90c0f0" stop-opacity="0.95"/><stop offset="100%" stop-color="#c0e0f8" stop-opacity="0.78"/></linearGradient></defs><ellipse cx="40" cy="38" rx="36" ry="32" fill="url(#yk1)"/><path d="M2,46 L14,14 L24,28 L32,8 L40,24 L48,10 L56,26 L66,12 L78,44Z" fill="#a8c8e2" opacity="0.88"/><path d="M28,12 L32,10 L36,12" fill="white" opacity="0.7"/><path d="M46,14 L50,12 L54,14" fill="white" opacity="0.65"/><rect x="0" y="46" width="80" height="34" fill="#46a8d8" rx="0" opacity="0.9"/><path d="M0,48 Q10,44 20,48 Q30,52 40,48 Q50,44 60,48 Q70,52 80,48 L80,54 L0,54Z" fill="rgba(255,255,255,0.5)"/><path d="M0,60 Q20,56 40,60 Q60,64 80,60" fill="none" stroke="rgba(255,255,255,0.32)" stroke-width="2" style="animation:wavemove 8s linear infinite"/><path d="M30,46 L36,44 L40,46 L44,44 L50,46" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="2"/><ellipse cx="9" cy="72" rx="5" ry="7" fill="#c8a8e8" opacity="0.84" style="animation:petalopen 4.2s ease-in-out infinite"/><ellipse cx="71" cy="72" rx="5" ry="7" fill="#d8b8f0" opacity="0.8" style="animation:petalopen 4.2s ease-in-out infinite;animation-delay:1.2s"/></svg>',
-
-// Цхалтубо: советская купальня + горы Грузии + пар
-tskaltubo:'<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><ellipse cx="40" cy="38" rx="36" ry="32" fill="#daeee4" opacity="0.8"/><path d="M0,54 L10,26 L18,38 L26,16 L34,30 L42,18 L50,32 L58,20 L68,34 L78,52Z" fill="#98c878" opacity="0.84"/><path d="M28,18 L34,16 L40,18" fill="white" opacity="0.7" style="animation:snowglint 4.5s ease-in-out infinite"/><rect x="10" y="46" width="60" height="22" fill="#e8d0a8" rx="3" opacity="0.92"/><path d="M10,46 L40,34 L70,46Z" fill="#d8b888" opacity="0.9"/><path d="M20,58 Q25,50 30,58" fill="none" stroke="#b88890" stroke-width="2.5" stroke-linecap="round"/><path d="M38,58 Q43,50 48,58" fill="none" stroke="#b88890" stroke-width="2.5" stroke-linecap="round"/><ellipse cx="40" cy="72" rx="20" ry="7" fill="#68c8d8" opacity="0.8"/><circle cx="33" cy="64" r="4" fill="rgba(140,230,238,0.7)" style="animation:steam 2s ease-in-out infinite"/><circle cx="41" cy="60" r="3.5" fill="rgba(130,230,235,0.65)" style="animation:steam 2.2s ease-in-out infinite;animation-delay:0.5s"/><circle cx="48" cy="63" r="3.8" fill="rgba(140,228,232,0.6)" style="animation:steam 2.5s ease-in-out infinite;animation-delay:1s"/><circle cx="40" cy="72" r="12" fill="none" stroke="rgba(88,210,218,0.25)" stroke-width="2.5" style="animation:ripple 3.5s ease-out infinite"/></svg>',
-
-// Боржоми: горное ущелье Грузии + источник + хвойный лес
-borjomi:'<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><ellipse cx="40" cy="38" rx="36" ry="32" fill="#daf0e0" opacity="0.8"/><path d="M0,58 L12,24 L20,38 L28,14 L36,30 L44,16 L52,32 L60,20 L70,34 L80,56Z" fill="#98c878" opacity="0.86"/><path d="M2,58 L12,28 L20,42 L28,18 L36,34 L44,20 L52,36 L62,24 L80,56Z" fill="#80b060" opacity="0.55"/><rect x="34" y="50" width="12" height="22" rx="6" fill="#88c0e0" opacity="0.92"/><path d="M40,50 Q30,34 26,18 Q30,32 32,44 Q35,48 40,50Z" fill="rgba(72,165,215,0.74)" style="animation:fountainjet 2.5s ease-in-out infinite"/><path d="M40,50 Q50,34 54,18 Q50,32 48,44 Q45,48 40,50Z" fill="rgba(72,165,215,0.74)" style="animation:fountainjet 2.5s ease-in-out infinite;animation-delay:0.6s"/><circle cx="40" cy="16" r="5.5" fill="rgba(72,195,245,0.85)" style="animation:steam 2.5s ease-in-out infinite"/><rect x="56" y="44" width="16" height="20" fill="#e0c898" rx="1" opacity="0.9"/><path d="M56,44 L64,32 L72,44Z" fill="#c8a870" opacity="0.92"/><ellipse cx="9" cy="68" rx="5" ry="8" fill="#c0a0e0" opacity="0.84" style="animation:leafsway 3.2s ease-in-out infinite"/><g style="animation:birdfly 9s ease-in-out infinite"><path d="M-5,28 Q-1,22 3,28" fill="none" stroke="#587090" stroke-width="2" stroke-linecap="round"/></g></svg>',
-
-// Бадгастайн: Альпы + штольня радона + горный водопад
-badgastein:'<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="bg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#b8d8f0" stop-opacity="0.95"/><stop offset="100%" stop-color="#daeef8" stop-opacity="0.78"/></linearGradient></defs><ellipse cx="40" cy="38" rx="36" ry="32" fill="url(#bg1)"/><path d="M0,58 L12,16 L22,34 L32,6 L42,28 L52,12 L64,30 L76,50Z" fill="#c0dcf0" opacity="0.9"/><path d="M24,10 L32,8 L40,10" fill="white" opacity="0.88" style="animation:snowglint 3s ease-in-out infinite"/><path d="M48,14 L54,12 L60,14" fill="white" opacity="0.82" style="animation:snowglint 3.5s ease-in-out infinite;animation-delay:0.9s"/><rect x="20" y="46" width="40" height="22" fill="#f0e8d8" rx="2" opacity="0.92"/><path d="M20,46 L40,34 L60,46Z" fill="#c8a870" opacity="0.92"/><path d="M34,64 Q40,56 46,64" fill="none" stroke="#8a7068" stroke-width="5" stroke-linecap="round"/><circle cx="34" cy="58" r="3" fill="rgba(195,192,210,0.58)" style="animation:steam 1.8s ease-in-out infinite"/><circle cx="42" cy="54" r="2.5" fill="rgba(195,192,210,0.52)" style="animation:steam 2s ease-in-out infinite;animation-delay:0.6s"/><circle cx="46" cy="58" r="2.8" fill="rgba(195,192,210,0.48)" style="animation:steam 2.2s ease-in-out infinite;animation-delay:1.1s"/><path d="M64,38 Q68,30 68,48 Q66,56 68,66" fill="none" stroke="#88c0e8" stroke-width="3" stroke-linecap="round" opacity="0.82"/><ellipse cx="8" cy="68" rx="5" ry="8" fill="#c8a8e8" opacity="0.84" style="animation:leafsway 3.2s ease-in-out infinite"/><ellipse cx="72" cy="70" rx="4.5" ry="7" fill="#d8b8f0" opacity="0.8" style="animation:leafsway 3.2s ease-in-out infinite;animation-delay:0.7s"/></svg>',
-
-// Пьештяни: термальный бассейн на острове + европейская архитектура
-piestany:'<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><ellipse cx="40" cy="38" rx="36" ry="32" fill="#e4f4f0" opacity="0.8"/><path d="M0,46 Q20,40 40,46 Q60,52 80,46 L80,80 L0,80Z" fill="#68c0d8" rx="0" opacity="0.78"/><path d="M0,48 Q10,44 20,48 Q30,52 40,48 Q50,44 60,48 Q70,52 80,48 L80,54 L0,54Z" fill="rgba(255,255,255,0.48)"/><path d="M0,62 Q20,58 40,62 Q60,66 80,62" fill="none" stroke="rgba(255,255,255,0.32)" stroke-width="2" style="animation:wavemove 6s linear infinite"/><ellipse cx="40" cy="50" rx="26" ry="11" fill="#a8d0a0" opacity="0.92"/><rect x="26" y="40" width="28" height="16" fill="#f0e8d8" rx="2" opacity="0.92"/><path d="M26,40 L40,28 L54,40Z" fill="#d4b898" opacity="0.92"/><path d="M30,50 Q35,42 40,50" fill="none" stroke="#b898a0" stroke-width="2.2" stroke-linecap="round"/><path d="M40,50 Q45,42 50,50" fill="none" stroke="#b898a0" stroke-width="2.2" stroke-linecap="round"/><ellipse cx="40" cy="64" rx="16" ry="6" fill="#78d8d0" opacity="0.8"/><circle cx="34" cy="58" r="3.5" fill="rgba(130,230,225,0.7)" style="animation:steam 2s ease-in-out infinite"/><circle cx="42" cy="54" r="3" fill="rgba(130,230,225,0.65)" style="animation:steam 2.2s ease-in-out infinite;animation-delay:0.6s"/><circle cx="40" cy="64" r="10" fill="none" stroke="rgba(90,210,205,0.28)" stroke-width="2.5" style="animation:ripple 4s ease-out infinite"/><ellipse cx="8" cy="70" rx="5" ry="7" fill="#f0a0c0" opacity="0.84" style="animation:petalopen 3.5s ease-in-out infinite"/></svg>',
-
-// Искья: вулкан + термальные джакузи у моря + Арагонский замок + птицы
-ischia:'<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="i1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#80d0f8" stop-opacity="0.95"/><stop offset="50%" stop-color="#48b8e8" stop-opacity="0.9"/><stop offset="100%" stop-color="#30a0d8" stop-opacity="0.95"/></linearGradient></defs><rect width="80" height="80" fill="url(#i1)" rx="6" opacity="0.9"/><ellipse cx="40" cy="52" rx="32" ry="18" fill="#88c070" opacity="0.92"/><path d="M18,52 L40,18 L62,52Z" fill="#70a858" opacity="0.9"/><circle cx="40" cy="18" r="6" fill="#e89858" opacity="0.92" style="animation:volcfire 1.8s ease-in-out infinite"/><circle cx="40" cy="18" rx="10" ry="10" fill="rgba(225,125,48,0.3)" style="animation:volcfire 1.8s ease-in-out infinite"/><circle cx="37" cy="11" r="3.5" fill="rgba(208,188,168,0.68)" style="animation:steam 1.5s ease-in-out infinite"/><circle cx="43" cy="8" r="3" fill="rgba(208,188,168,0.58)" style="animation:steam 1.8s ease-in-out infinite;animation-delay:0.4s"/><circle cx="46" cy="5" r="2.4" fill="rgba(208,188,168,0.48)" style="animation:steam 2.1s ease-in-out infinite;animation-delay:0.9s"/><ellipse cx="24" cy="58" rx="10" ry="5" fill="#58d8d0" opacity="0.8"/><ellipse cx="56" cy="60" rx="9" ry="5" fill="#68d0c8" opacity="0.78"/><circle cx="24" cy="58" r="7" fill="none" stroke="rgba(80,210,205,0.28)" stroke-width="2" style="animation:ripple 3.5s ease-out infinite"/><circle cx="56" cy="60" r="6" fill="none" stroke="rgba(80,210,205,0.25)" stroke-width="2" style="animation:ripple 3.5s ease-out infinite;animation-delay:1.2s"/><rect x="60" y="34" width="16" height="18" fill="#d4b888" rx="1" opacity="0.92"/><path d="M59,34 L68,22 L77,34Z" fill="#c4a878" opacity="0.92"/><ellipse cx="68" cy="22" rx="3.5" ry="3.5" fill="#b8a858" opacity="0.88" style="animation:flagwave 2.2s ease-in-out infinite"/><g style="animation:birdfly 6s ease-in-out infinite"><path d="M-5,26 Q-1,20 3,26" fill="none" stroke="#405898" stroke-width="2.3" stroke-linecap="round"/></g><g style="animation:birdfly2 8.5s ease-in-out infinite;animation-delay:2.2s"><path d="M-7,18 Q-3,13 1,18" fill="none" stroke="#405898" stroke-width="1.8" stroke-linecap="round"/></g></svg>'
+// Map resort IDs to icon types
+var ICON_MAP={
+  kmv:'kmv',podmoskovye:'podmoskovye',sochi:'sochi',
+  belokurikha:'mountain_generic',gorkey:'forest_spring',anapa:'beach',
+  staraya_russa:'fountain_dome',crimea:'cliff_castle',sestroretsk:'birch_water',
+  shira:'steppe_lake',uvildy:'mountain_lake',yakty_kul:'mountain_lake',
+  tinaki:'steppe_lake',darasun:'mountain_generic',usolie:'steppe_lake',
+  ust_kut_rad:'mountain_generic',yangantau:'mountain_generic',
+  sergievsk:'forest_spring',krasnoUsolsk:'mountain_generic',
+  ulyanovsk_rad:'birch_water',tanyp:'forest_spring',
+  tskaltubo:'thermal_spa',borjomi:'mountain_generic',badgastein:'mountain_generic',
+  piestany:'thermal_spa',ischia:'volcanic_sea',
+  bad_brambah:'german_valley',bad_nauhayim:'elegant_spa',
+  bad_elster:'german_valley',bad_ems:'german_valley',
+  bad_telts:'german_valley',wiesbaden:'elegant_spa',
+  frantishkovi:'german_valley',bagnere:'mountain_generic',
+  dax:'forest_spring',aix_les_bains:'mountain_lake',
+  vichy:'fountain_dome',sirmione:'mountain_lake',
+  salsomaggiore:'elegant_spa',palm_springs:'desert_palm',
+  saratoga_springs:'elegant_spa',druskininkai:'forest_spring',
+  atami:'japanese_onsen',
+  bad_austria:'thermal_spa',bad_hall:'thermal_spa'
 };
 
-// ══════════════════════════════════════════════════
-// ДАННЫЕ КУРОРТОВ
-// ══════════════════════════════════════════════════
+// ═══ ФАКТОРЫ и ДАННЫЕ ═══
+var F={radon:{n:'Радоновые воды',c:'#C39BD3'},sulfide:{n:'Сероводородные воды',c:'#FAD7A0'},chloride:{n:'Хлоридно-натриевые воды',c:'#AED6F1'},iodine:{n:'Йодобромные воды',c:'#F9A8C9'},carbonic:{n:'Углекислые воды',c:'#A9DFBF'},mud:{n:'Грязелечение',c:'#C8D8B0'},thermal:{n:'Термальные источники',c:'#FFD4B8'}};
+
 var RESORTS=[
-{id:'kmv',n:'КМВ',fn:'Кавказские Минеральные Воды',lat:44.03,lng:42.88,cities:['Пятигорск','Ессентуки','Кисловодск','Железноводск'],reg:'Ставропольский край',f:['radon','sulfide','carbonic','mud'],foreign:false,desc:'Крупнейший курортный регион России. 130+ источников минеральных вод. Радоновые и сероводородные ванны, нарзаны, тамбуканские грязи.',access:'Самолётом до аэропорта Минеральные Воды (МРВ).',sans:[{st:'⭐⭐⭐⭐⭐',n:'Санаторий «Истокъ»',note:'Ессентуки. Элитный',r:4.7,src:'Яндекс Карты'},{st:'⭐⭐⭐⭐',n:'Санаторий «Пятигорский Нарзан»',note:'Радоновое отделение',r:4.5,src:'Яндекс Карты'},{st:'⭐⭐⭐⭐',n:'Санаторий «Машук Акватерм»',note:'Итальянские термы',r:4.6,src:'Яндекс Карты'},{st:'⭐⭐⭐',n:'Санаторий «Виктория»',note:'Радоновые ванны',r:4.1,src:'Яндекс Карты'}]},
-{id:'podmoskovye',n:'Подмосковье',fn:'Подмосковье',lat:55.74,lng:37.20,cities:['Московская область'],reg:'Московская область',f:['radon','mud','chloride'],foreign:false,desc:'Санатории Подмосковья: радон, грязи, хлоридно-натриевые воды. Гинекологический профиль, реабилитация.',access:'Из Москвы электричкой или автомобилем 40–120 мин.',sans:[{st:'⭐⭐⭐⭐',n:'Санаторий «Истра» (РОП РФ)',note:'Гинекология, берег реки',r:4.3,src:'Яндекс Карты'},{st:'⭐⭐⭐⭐',n:'AMAKS «Новая Истра»',note:'Бальнеопроцедуры, радон',r:4.2,src:'2ГИС'},{st:'⭐⭐⭐',n:'Марфинский санаторий (МО РФ)',note:'Гинекология',r:4.0,src:'2ГИС'},{st:'⭐⭐⭐',n:'Санаторий «Ерино»',note:'Реабилитация после операций',r:4.0,src:'2ГИС'},{st:'⭐⭐⭐',n:'Санаторий «Звенигород»',note:'Бальнеопроцедуры',r:3.9,src:'Яндекс Карты'},{st:'⭐⭐⭐',n:'Санаторий «Дорохово»',note:'Гинекологические программы',r:3.8,src:'2ГИС'}]},
-{id:'sochi',n:'Сочи / Мацеста',fn:'Сочи (Мацеста)',lat:43.562,lng:39.718,cities:['Сочи','Мацеста'],reg:'Краснодарский край',f:['sulfide','iodine','mud'],foreign:false,desc:'Сероводородные воды до 400 мг/л — уникальные в России. Йодобромные воды. Мацестинская бальнеолечебница.',access:'Самолётом до аэропорта Сочи (Адлер).',sans:[{st:'⭐⭐⭐⭐',n:'Санаторий «Октябрьский»',note:'Гинекологический профиль',r:4.2,src:'Яндекс Карты'},{st:'⭐⭐⭐⭐',n:'Санаторий «Мыс Видный»',note:'Салют и Олимп',r:4.3,src:'2ГИС'},{st:'⭐⭐⭐',n:'Санаторий «Актёр»',note:'',r:4.0,src:'Яндекс Карты'}]},
-{id:'belokurikha',n:'Белокуриха',fn:'Белокуриха',lat:51.996,lng:84.985,cities:['Белокуриха'],reg:'Алтайский край',f:['radon','mud'],foreign:false,desc:'Термальные азотно-кремнистые слаборадоновые воды (+42°C). Сульфидно-иловые грязи. 260 солнечных дней в году.',access:'Самолётом до Горно-Алтайска (125 км) или Барнаула.',sans:[{st:'⭐⭐⭐⭐',n:'Санаторий «Катунь»',note:'У источника радоновых вод',r:4.5,src:'Яндекс Карты'},{st:'⭐⭐⭐⭐',n:'Санаторий «Белокуриха»',note:'Ведущий курорт',r:4.3,src:'2ГИС'},{st:'⭐⭐⭐',n:'Санаторий «Алтай-Вест»',note:'Топ-10 здравниц РФ',r:4.4,src:'Яндекс Карты'}]},
-{id:'gorkey',n:'Горячий Ключ / Хадыженск',fn:'Предгорья Кавказа',lat:44.518,lng:39.328,cities:['Горячий Ключ','Хадыженск'],reg:'Краснодарский край',f:['iodine','thermal'],foreign:false,desc:'Йодобромные термальные воды до +80°C. Хвойные леса предгорий Кавказа.',access:'Самолётом до Краснодара, далее автобусом.',sans:[{st:'⭐⭐⭐',n:'Санаторий «Горячий Ключ»',note:'Йодобромные воды',r:4.2,src:'Яндекс Карты'},{st:'⭐⭐⭐',n:'Санаторий «Изумрудный»',note:'',r:4.0,src:'2ГИС'},{st:'⭐⭐⭐',n:'Санаторий «Минеральный»',note:'Хадыженск',r:3.9,src:'2ГИС'}]},
-{id:'anapa',n:'Анапа',fn:'Анапа',lat:44.895,lng:37.318,cities:['Анапа'],reg:'Краснодарский край',f:['mud'],foreign:false,desc:'Сульфидно-иловые грязи из грязевых вулканов. 295 солнечных дней. Пляжи 42 км.',access:'Самолётом до аэропорта Анапа (Витязево).',sans:[{st:'⭐⭐⭐⭐',n:'Санаторий «Надежда»',note:'Водогрязелечебница',r:4.4,src:'Яндекс Карты'},{st:'⭐⭐⭐',n:'Санаторий «ДиЛуч»',note:'90-летний опыт',r:4.1,src:'2ГИС'}]},
-{id:'staraya_russa',n:'Старая Русса',fn:'Старая Русса',lat:57.998,lng:31.350,cities:['Старая Русса'],reg:'Новгородская область',f:['chloride','mud'],foreign:false,desc:'Хлоридно-натриевые рассолы до 260 г/л. «Старорусские» грязи. Муравьёвский фонтан с 1859 г. — мощнейший в Европе.',access:'Поездом из Москвы или Санкт-Петербурга.',sans:[{st:'⭐⭐⭐',n:'Курорт «Старая Русса» AMAKS',note:'Аквацентр, СПА, терм. комплекс',r:4.2,src:'Яндекс Карты'}]},
-{id:'crimea',n:'Крым (Саки / Евпатория)',fn:'Курорты Крыма',lat:45.162,lng:33.490,cities:['Саки','Евпатория'],reg:'Республика Крым',f:['mud'],foreign:false,desc:'Илово-сульфидные грязи Сакского озера. Рапа. Грязи Мойнакского озера.',access:'Самолётом до Симферополя.',sans:[{st:'⭐⭐⭐',n:'Санаторий «Саки» (им. Бурденко)',note:'Грязевые тампоны',r:4.1,src:'Яндекс Карты'},{st:'⭐⭐⭐',n:'Санаторий «Полтава-Крым»',note:'Гинекологические программы',r:4.2,src:'2ГИС'}]},
-{id:'sestroretsk',n:'Сестрорецк',fn:'Сестрорецк',lat:60.095,lng:29.964,cities:['Сестрорецк'],reg:'Ленинградская область',f:['mud'],foreign:false,desc:'Погребённые сапропели литоринового моря. Хлоридно-натриевые воды. Финский залив.',access:'Электричкой от Финляндского вокзала СПб ~1 ч.',sans:[{st:'⭐⭐⭐',n:'Санаторий «Сестрорецкий курорт»',note:'Клиника им. Бехтерева',r:4.3,src:'Яндекс Карты'}]},
-{id:'shira',n:'Озеро Шира',fn:'Курорт «Озеро Шира»',lat:54.500,lng:89.950,cities:['пос. Жемчужный'],reg:'Республика Хакасия',f:['mud'],foreign:false,desc:'Сульфидно-иловая грязь озера Утичье-3. Рапа. Хакасские курганы, степные ландшафты.',access:'Самолётом до Абакана, ~170 км.',sans:[{st:'⭐⭐',n:'Санаторий «Озеро Шира»',note:'Грязелечение, бальнеотерапия',r:3.8,src:'2ГИС'}]},
-{id:'uvildy',n:'Увильды',fn:'Увильды',lat:55.591,lng:60.571,cities:['Увильды'],reg:'Челябинская область',f:['radon'],foreign:false,desc:'Радоновые источники ~400–1200 Бк/л. Кристальное озеро Увильды в уральской тайге.',access:'Поездом до ст. Аргаяш (21 км) или Челябинска.',sans:[{st:'⭐⭐⭐⭐',n:'Санаторий «Ульдивы»',note:'На берегу озера',r:4.3,src:'Яндекс Карты'}]},
-{id:'yakty_kul',n:'Якты-Куль',fn:'Санаторий Якты-Куль',lat:52.917,lng:58.783,cities:['Якты-Куль'],reg:'Республика Башкортостан',f:['radon'],foreign:false,desc:'Лаборатория с 15-кратным увеличением концентрации радона. Горное озеро, уральские горы.',access:'Через Магнитогорск или Уфу.',sans:[{st:'⭐⭐⭐⭐',n:'Санаторий «Якты-Куль»',note:'Озеро, горы, радон',r:4.2,src:'Яндекс Карты'}]},
-{id:'tskaltubo',n:'Цхалтубо',fn:'Цхалтубо',lat:42.313,lng:42.601,cities:['Цхалтубо'],reg:'Грузия',f:['radon','thermal'],foreign:true,desc:'Слаборадоновые термальные воды (33–35°C). Пещерные источники прямо в ванны. Знаменитая советская здравница.',access:'Самолётом до Тбилиси или Кутаиси, ~40 км.',sans:[{st:'⭐⭐⭐',n:'Курорт «Цхалтубо»',note:'Советская база, доступные цены',r:3.9,src:'Google Maps'}]},
-{id:'borjomi',n:'Боржоми',fn:'Боржоми',lat:41.842,lng:43.393,cities:['Боржоми'],reg:'Грузия',f:['carbonic'],foreign:true,desc:'Углекислые гидрокарбонатно-натриевые воды. Горное ущелье на высоте 704–806 м. Хвойные леса.',access:'Самолётом до Тбилиси, ~150 км.',sans:[{st:'⭐⭐⭐⭐',n:'Курорт «Боржоми»',note:'Горный воздух, минводы',r:4.2,src:'Google Maps'}]},
-{id:'badgastein',n:'Бадгастайн',fn:'Бадгастайн',lat:47.116,lng:13.136,cities:['Бадгастайн'],reg:'Австрия',f:['radon','thermal'],foreign:true,desc:'Радоновые галереи (штольни) в горе — воздух насыщен радоном. Один из сильнейших методов при эндометриозе. Альпийская природа.',access:'Самолётом до Зальцбурга или Мюнхена, далее поездом.',sans:[{st:'⭐⭐⭐⭐⭐',n:'Термальный курорт Бадгастайн',note:'Штольни с радоном — уникально в Европе',r:4.7,src:'Google Maps'}]},
-{id:'piestany',n:'Пьештяни',fn:'Пьештяни',lat:48.593,lng:17.833,cities:['Пьештяни'],reg:'Словакия',f:['sulfide','mud','thermal'],foreign:true,desc:'Термальные сероводородные источники (67–69°C) и грязь со дна реки Ваг. 60+ видов процедур. Курорт на острове.',access:'Самолётом до Братиславы или Вены (60–80 км).',sans:[{st:'⭐⭐⭐⭐',n:'Курорт Пьештяни',note:'Остров, 60 видов процедур',r:4.5,src:'Google Maps'}]},
-{id:'ischia',n:'Искья',fn:'Искья',lat:40.728,lng:13.897,cities:['Искья'],reg:'Италия',f:['radon','thermal','mud'],foreign:true,desc:'Единственный в Европе остров с термальными источниками на побережье. Вулканические воды. Парки Negombo и Poseidon.',access:'Самолётом до Неаполя, паром ~1 час.',sans:[{st:'⭐⭐⭐⭐',n:'Parco Negombo',note:'Термальные бассейны на пляже',r:4.6,src:'Google Maps'},{st:'⭐⭐⭐⭐',n:'Thermae Poseidon',note:'Термальный парк у моря',r:4.5,src:'Google Maps'}]}
+// ─── РОССИЯ ───
+{id:'kmv',n:'КМВ',fn:'Кавказские Минеральные Воды',lat:44.03,lng:42.88,cities:['Пятигорск','Ессентуки','Кисловодск','Железноводск'],reg:'Ставропольский край',f:['radon','sulfide','carbonic','mud'],foreign:false,desc:'Крупнейший курортный регион России. 130+ источников минеральных вод. Радоновые и сероводородные ванны, нарзаны, тамбуканские грязи.',access:'Самолётом до аэропорта Минеральные Воды (МРВ).',sans:[
+  {st:'⭐⭐⭐⭐⭐',n:'Санаторий «Истокъ»',note:'Ессентуки. Элитный',r:4.7,src:'Яндекс Карты',link:'https://yandex.ru/maps/?text=Санаторий+Истокъ+Ессентуки'},
+  {st:'⭐⭐⭐⭐',n:'Санаторий «Пятигорский Нарзан»',note:'Радоновое отделение',r:4.5,src:'Яндекс Карты',link:'https://yandex.ru/maps/?text=Санаторий+Пятигорский+Нарзан'},
+  {st:'⭐⭐⭐⭐',n:'Санаторий «Машук Акватерм»',note:'Итальянские термы',r:4.6,src:'Яндекс Карты',link:'https://yandex.ru/maps/?text=Санаторий+Машук+Акватерм'},
+  {st:'⭐⭐⭐',n:'Санаторий «Виктория»',note:'Ессентуки. Радоновые ванны',r:4.1,src:'Яндекс Карты',link:'https://yandex.ru/maps/?text=Санаторий+Виктория+Ессентуки'}
+]},
+{id:'podmoskovye',n:'Подмосковье',fn:'Подмосковье',lat:55.74,lng:37.20,cities:['Московская область'],reg:'Московская область',f:['radon','mud','chloride'],foreign:false,desc:'Санатории Подмосковья: радон, грязи, хлоридно-натриевые воды. Гинекологический профиль, реабилитация.',access:'Из Москвы электричкой или автомобилем 40–120 мин.',sans:[
+  {st:'⭐⭐⭐⭐',n:'Санаторий «Истра» (РОП РФ)',note:'Гинекология, берег реки',r:4.3,src:'Яндекс Карты',link:'https://yandex.ru/maps/?text=Санаторий+Истра+РОП'},
+  {st:'⭐⭐⭐⭐',n:'AMAKS «Новая Истра»',note:'Бальнеопроцедуры, радон',r:4.2,src:'2ГИС',link:'https://2gis.ru/search/Амакс+Новая+Истра'},
+  {st:'⭐⭐⭐',n:'Марфинский санаторий (МО РФ)',note:'Гинекология',r:4.0,src:'2ГИС',link:'https://2gis.ru/search/Марфинский+санаторий'},
+  {st:'⭐⭐⭐',n:'Санаторий «Ерино»',note:'Реабилитация после операций',r:4.0,src:'2ГИС',link:'https://yandex.ru/maps/?text=Санаторий+Ерино+Подольск'},
+  {st:'⭐⭐⭐',n:'Санаторий «Звенигород»',note:'Бальнеопроцедуры',r:3.9,src:'Яндекс Карты',link:'https://yandex.ru/maps/?text=Санаторий+Звенигород'},
+  {st:'⭐⭐⭐',n:'Санаторий «Дорохово»',note:'Гинекологические программы',r:3.8,src:'2ГИС',link:'https://yandex.ru/maps/?text=Санаторий+Дорохово'}
+]},
+{id:'sochi',n:'Сочи / Мацеста',fn:'Сочи (Мацеста)',lat:43.562,lng:39.718,cities:['Сочи','Мацеста'],reg:'Краснодарский край',f:['sulfide','iodine','mud'],foreign:false,desc:'Сероводородные воды до 400 мг/л — уникальные в России. Йодобромные воды. Мацестинская бальнеолечебница.',access:'Самолётом до аэропорта Сочи (Адлер).',sans:[
+  {st:'⭐⭐⭐⭐',n:'Санаторий «Октябрьский»',note:'Гинекологический профиль',r:4.2,src:'Яндекс Карты',link:'https://yandex.ru/maps/?text=Санаторий+Октябрьский+Сочи'},
+  {st:'⭐⭐⭐⭐',n:'Санаторий «Мыс Видный»',note:'Салют и Олимп',r:4.3,src:'2ГИС',link:'https://yandex.ru/maps/?text=Санаторий+Мыс+Видный+Сочи'},
+  {st:'⭐⭐⭐',n:'Санаторий «Актёр»',note:'',r:4.0,src:'Яндекс Карты',link:'https://yandex.ru/maps/?text=Санаторий+Актёр+Сочи'}
+]},
+{id:'belokurikha',n:'Белокуриха',fn:'Белокуриха',lat:51.996,lng:84.985,cities:['Белокуриха'],reg:'Алтайский край',f:['radon','mud'],foreign:false,desc:'Термальные азотно-кремнистые слаборадоновые воды (+42°C). Сульфидно-иловые грязи. 260 солнечных дней.',access:'Самолётом до Горно-Алтайска (125 км) или Барнаула.',sans:[
+  {st:'⭐⭐⭐⭐',n:'Санаторий «Катунь»',note:'У источника радоновых вод',r:4.5,src:'Яндекс Карты',link:'https://yandex.ru/maps/?text=Санаторий+Катунь+Белокуриха'},
+  {st:'⭐⭐⭐⭐',n:'Санаторий «Белокуриха»',note:'Ведущий курорт',r:4.3,src:'2ГИС',link:'https://yandex.ru/maps/?text=Санаторий+Белокуриха'},
+  {st:'⭐⭐⭐',n:'Санаторий «Алтай-Вест»',note:'Топ-10 здравниц РФ',r:4.4,src:'Яндекс Карты',link:'https://yandex.ru/maps/?text=Санаторий+Алтай+Вест+Белокуриха'}
+]},
+{id:'gorkey',n:'Горячий Ключ / Хадыженск',fn:'Предгорья Кавказа',lat:44.518,lng:39.328,cities:['Горячий Ключ','Хадыженск'],reg:'Краснодарский край',f:['iodine','thermal'],foreign:false,desc:'Йодобромные термальные воды до +80°C. Хвойные леса предгорий Кавказа.',access:'Самолётом до Краснодара, далее автобусом.',sans:[
+  {st:'⭐⭐⭐',n:'Санаторий «Горячий Ключ»',note:'Йодобромные воды',r:4.2,src:'Яндекс Карты',link:'https://yandex.ru/maps/?text=Санаторий+Горячий+Ключ'},
+  {st:'⭐⭐⭐',n:'Санаторий «Изумрудный»',note:'',r:4.0,src:'2ГИС',link:'https://yandex.ru/maps/?text=Санаторий+Изумрудный+Горячий+Ключ'},
+  {st:'⭐⭐⭐',n:'Санаторий «Минеральный»',note:'Хадыженск',r:3.9,src:'2ГИС',link:'https://yandex.ru/maps/?text=Санаторий+Минеральный+Хадыженск'}
+]},
+{id:'anapa',n:'Анапа',fn:'Анапа',lat:44.895,lng:37.318,cities:['Анапа'],reg:'Краснодарский край',f:['mud'],foreign:false,desc:'Сульфидно-иловые грязи из грязевых вулканов. 295 солнечных дней. Пляжи 42 км.',access:'Самолётом до аэропорта Анапа (Витязево).',sans:[
+  {st:'⭐⭐⭐⭐',n:'Санаторий «Надежда»',note:'Водогрязелечебница',r:4.4,src:'Яндекс Карты',link:'https://yandex.ru/maps/?text=Санаторий+Надежда+Анапа'},
+  {st:'⭐⭐⭐',n:'Санаторий «ДиЛуч»',note:'90-летний опыт',r:4.1,src:'2ГИС',link:'https://yandex.ru/maps/?text=Санаторий+ДиЛуч+Анапа'}
+]},
+{id:'staraya_russa',n:'Старая Русса',fn:'Старая Русса',lat:57.998,lng:31.350,cities:['Старая Русса'],reg:'Новгородская область',f:['chloride','mud'],foreign:false,desc:'Хлоридно-натриевые рассолы до 260 г/л. «Старорусские» грязи. Муравьёвский фонтан с 1859 г.',access:'Поездом из Москвы или Санкт-Петербурга.',sans:[
+  {st:'⭐⭐⭐',n:'Курорт «Старая Русса» AMAKS',note:'Аквацентр, СПА, терм. комплекс',r:4.2,src:'Яндекс Карты',link:'https://yandex.ru/maps/?text=Курорт+Старая+Русса+Амакс'}
+]},
+{id:'crimea',n:'Крым (Саки / Евпатория)',fn:'Курорты Крыма',lat:45.162,lng:33.490,cities:['Саки','Евпатория'],reg:'Республика Крым',f:['mud'],foreign:false,desc:'Илово-сульфидные грязи Сакского озера. Рапа. Грязи Мойнакского озера.',access:'Самолётом до Симферополя.',sans:[
+  {st:'⭐⭐⭐',n:'Санаторий «Саки» (им. Бурденко)',note:'Грязевые тампоны',r:4.1,src:'Яндекс Карты',link:'https://yandex.ru/maps/?text=Санаторий+Саки+Бурденко'},
+  {st:'⭐⭐⭐',n:'Санаторий «Полтава-Крым»',note:'Гинекологические программы',r:4.2,src:'2ГИС',link:'https://yandex.ru/maps/?text=Санаторий+Полтава+Крым'}
+]},
+{id:'sestroretsk',n:'Сестрорецк',fn:'Сестрорецк',lat:60.095,lng:29.964,cities:['Сестрорецк'],reg:'Ленинградская область',f:['mud'],foreign:false,desc:'Погребённые сапропели литоринового моря. Хлоридно-натриевые воды. Финский залив.',access:'Электричкой от Финляндского вокзала СПб ~1 ч.',sans:[
+  {st:'⭐⭐⭐',n:'Санаторий «Сестрорецкий курорт»',note:'Клиника им. Бехтерева',r:4.3,src:'Яндекс Карты',link:'https://yandex.ru/maps/?text=Санаторий+Сестрорецкий+курорт'}
+]},
+{id:'shira',n:'Озеро Шира',fn:'Курорт «Озеро Шира»',lat:54.500,lng:89.950,cities:['пос. Жемчужный'],reg:'Республика Хакасия',f:['mud'],foreign:false,desc:'Сульфидно-иловая грязь озера Утичье-3. Рапа. Хакасские курганы.',access:'Самолётом до Абакана, ~170 км.',sans:[
+  {st:'⭐⭐',n:'Санаторий «Озеро Шира»',note:'Грязелечение, бальнеотерапия',r:3.8,src:'2ГИС',link:'https://yandex.ru/maps/?text=Санаторий+Озеро+Шира+Хакасия'}
+]},
+{id:'uvildy',n:'Увильды',fn:'Увильды',lat:55.591,lng:60.571,cities:['Увильды'],reg:'Челябинская область',f:['radon'],foreign:false,desc:'Радоновые источники ~400–1200 Бк/л. Кристальное озеро Увильды в уральской тайге.',access:'Поездом до ст. Аргаяш (21 км) или Челябинска.',sans:[
+  {st:'⭐⭐⭐⭐',n:'Санаторий «Ульдивы»',note:'На берегу озера',r:4.3,src:'Яндекс Карты',link:'https://yandex.ru/maps/?text=Санаторий+Ульдивы+Увильды'}
+]},
+{id:'yakty_kul',n:'Якты-Куль',fn:'Санаторий Якты-Куль',lat:52.917,lng:58.783,cities:['Якты-Куль'],reg:'Республика Башкортостан',f:['radon'],foreign:false,desc:'Лаборатория с 15-кратным увеличением концентрации радона. Горное озеро.',access:'Через Магнитогорск или Уфу.',sans:[
+  {st:'⭐⭐⭐⭐',n:'Санаторий «Якты-Куль»',note:'Озеро, горы, радон',r:4.2,src:'Яндекс Карты',link:'https://yandex.ru/maps/?text=Санаторий+Якты+Куль+Башкортостан'}
+]},
+// ─── ЗАРУБЕЖНЫЕ (РАНЕЕ ДОБАВЛЕННЫЕ) ───
+{id:'tskaltubo',n:'Цхалтубо',fn:'Цхалтубо',lat:42.313,lng:42.601,cities:['Цхалтубо'],reg:'Грузия',f:['radon','thermal'],foreign:true,desc:'Слаборадоновые термальные воды (33–35°C). Пещерные источники прямо в ванны. Советская здравница.',access:'Самолётом до Тбилиси или Кутаиси, ~40 км.',sans:[
+  {st:'⭐⭐⭐',n:'Курорт «Цхалтубо»',note:'Советская база, доступные цены',r:3.9,src:'Google Maps',link:'https://www.google.com/maps/search/Tskaltubo+spa+resort'}
+]},
+{id:'borjomi',n:'Боржоми',fn:'Боржоми',lat:41.842,lng:43.393,cities:['Боржоми'],reg:'Грузия',f:['carbonic'],foreign:true,desc:'Углекислые гидрокарбонатно-натриевые воды. Горное ущелье на высоте 704–806 м.',access:'Самолётом до Тбилиси, ~150 км.',sans:[
+  {st:'⭐⭐⭐⭐',n:'Курорт «Боржоми»',note:'Горный воздух, минводы',r:4.2,src:'Google Maps',link:'https://www.google.com/maps/search/Borjomi+spa+resort+Georgia'}
+]},
+{id:'badgastein',n:'Бадгастайн',fn:'Бадгастайн',lat:47.116,lng:13.136,cities:['Бадгастайн'],reg:'Австрия',f:['radon','thermal'],foreign:true,desc:'Радоновые галереи (штольни) в горе. Один из сильнейших методов при эндометриозе. Альпийская природа.',access:'Самолётом до Зальцбурга или Мюнхена, далее поездом.',sans:[
+  {st:'⭐⭐⭐⭐⭐',n:'Термальный курорт Бадгастайн',note:'Штольни с радоном — уникально в Европе',r:4.7,src:'Google Maps',link:'https://www.gastein.com'}
+]},
+{id:'piestany',n:'Пьештяни',fn:'Пьештяни',lat:48.593,lng:17.833,cities:['Пьештяни'],reg:'Словакия',f:['sulfide','mud','thermal'],foreign:true,desc:'Термальные сероводородные источники (67–69°C) и грязь со дна реки Ваг. 60+ видов процедур. Остров.',access:'Самолётом до Братиславы или Вены (60–80 км).',sans:[
+  {st:'⭐⭐⭐⭐',n:'Курорт Пьештяни',note:'Остров, 60 видов процедур',r:4.5,src:'Google Maps',link:'https://www.piestany.sk'}
+]},
+{id:'ischia',n:'Искья',fn:'Искья',lat:40.728,lng:13.897,cities:['Искья'],reg:'Италия',f:['radon','thermal','mud'],foreign:true,desc:'Единственный в Европе остров с термальными источниками на побережье. Вулканические воды. Парки Negombo и Poseidon.',access:'Самолётом до Неаполя, паром ~1 час.',sans:[
+  {st:'⭐⭐⭐⭐',n:'Parco Negombo',note:'Термальные бассейны на пляже',r:4.6,src:'Google Maps',link:'https://www.negombo.it'},
+  {st:'⭐⭐⭐⭐',n:'Thermae Poseidon',note:'Термальный парк у моря',r:4.5,src:'Google Maps',link:'https://www.thermaeposeidon.it'}
+]},
+// ─── НОВЫЕ ЗАРУБЕЖНЫЕ ───
+{id:'bad_brambah',n:'Бад-Брамбах',fn:'Бад-Брамбах',lat:50.273,lng:12.308,cities:['Бад-Брамбах'],reg:'Германия',f:['radon'],foreign:true,desc:'Радоновые воды средней концентрации. Тихий курорт на границе с Чехией. Рядом Франтишкови-Лазне.',access:'Самолётом до Мюнхена или Франкфурта, далее поездом.',sans:[
+  {st:'⭐⭐⭐⭐',n:'Kurhaus Bad Brambach',note:'Радоновые ванны и питьевое лечение',r:4.3,src:'Google Maps',link:'https://www.google.com/maps/search/Bad+Brambach+Kurhaus'}
+]},
+{id:'bad_nauhayim',n:'Бад-Наухайм',fn:'Бад-Наухайм',lat:50.366,lng:8.747,cities:['Бад-Наухайм'],reg:'Германия',f:['radon','thermal'],foreign:true,desc:'Радоновые воды + термальные соли. Элегантный курорт с парками. Знаменитая солевая градирня.',access:'Самолётом до Франкфурта (30 км), далее поездом.',sans:[
+  {st:'⭐⭐⭐⭐',n:'Bad Nauheim Kurpark & Thermen',note:'Термальный комплекс, солевая градирня',r:4.4,src:'Google Maps',link:'https://www.bad-nauheim.de'}
+]},
+{id:'bad_elster',n:'Бад-Эльстер',fn:'Бад-Эльстер',lat:50.277,lng:12.233,cities:['Бад-Эльстер'],reg:'Германия (Саксония)',f:['carbonic','mud'],foreign:true,desc:'Холодные углекислые источники (16 источников). Торфяные грязи. Крупнейший бальнеологический курорт Саксонии.',access:'Самолётом до Лейпцига или Мюнхена, далее поездом.',sans:[
+  {st:'⭐⭐⭐⭐',n:'König Albert Bad Elster',note:'Карбонатные ванны, торфяные грязи',r:4.3,src:'Google Maps',link:'https://www.bad-elster.de'}
+]},
+{id:'bad_ems',n:'Бад-Эмс',fn:'Бад-Эмс',lat:50.337,lng:7.714,cities:['Бад-Эмс'],reg:'Германия (ЮНЕСКО)',f:['carbonic'],foreign:true,desc:'Термальные (28–52°C) углекислые воды. Воды эффективны при гинекологических хронических воспалениях.',access:'Самолётом до Франкфурта (~80 км), далее поездом.',sans:[
+  {st:'⭐⭐⭐⭐',n:'Römer-Therme Bad Ems',note:'Термальные углекислые ванны. Объект ЮНЕСКО',r:4.5,src:'Google Maps',link:'https://www.bad-ems.de'}
+]},
+{id:'bad_telts',n:'Бад-Тельц',fn:'Бад-Тельц',lat:47.760,lng:11.558,cities:['Бад-Тельц'],reg:'Германия (Бавария)',f:['iodine','mud'],foreign:true,desc:'Йодистые минеральные источники. Баварские Альпы. Грязелечебница. Барочная архитектура.',access:'Самолётом до Мюнхена (~50 км), далее автобусом.',sans:[
+  {st:'⭐⭐⭐⭐',n:'Alpamare Bad Tölz',note:'Йодистые воды, альпийский воздух',r:4.3,src:'Google Maps',link:'https://www.bad-toelz.de'}
+]},
+{id:'wiesbaden',n:'Висбаден',fn:'Висбаден',lat:50.082,lng:8.244,cities:['Висбаден'],reg:'Германия',f:['chloride','thermal'],foreign:true,desc:'27 термальных источников (49–66°C). Элегантный курорт рядом с Франкфуртом и Рейном.',access:'Самолётом до Франкфурта (30 мин на поезде).',sans:[
+  {st:'⭐⭐⭐⭐⭐',n:'Kaiser-Friedrich-Therme Wiesbaden',note:'Исторические термы в центре города',r:4.6,src:'Google Maps',link:'https://www.wiesbaden.de/therme'}
+]},
+{id:'frantishkovi',n:'Франтишкови-Лазне',fn:'Франтишкови-Лазне',lat:50.122,lng:12.349,cities:['Франтишкови-Лазне'],reg:'Чехия',f:['radon','carbonic'],foreign:true,desc:'Радоновые и углекислые воды. Рядом с немецким Бад-Брамбахом. Уютный курортный городок.',access:'Самолётом до Мюнхена или Праги, далее поездом.',sans:[
+  {st:'⭐⭐⭐⭐',n:'Курорт Франтишкови-Лазне',note:'Радон + углекислые воды, доступные цены',r:4.2,src:'Google Maps',link:'https://www.franzensbad.cz'}
+]},
+{id:'bagnere',n:'Баньер-де-Люшон',fn:'Баньер-де-Люшон',lat:42.794,lng:0.594,cities:['Баньер-де-Люшон'],reg:'Франция (Пиренеи)',f:['radon','sulfide'],foreign:true,desc:'Радоновые термальные воды + серные источники. Пиренеи на границе с Испанией. Уникальное сочетание.',access:'Самолётом до Тулузы (~160 км), далее автобусом.',sans:[
+  {st:'⭐⭐⭐⭐',n:'Thermes de Luchon',note:'Радон + сера. Французская бальнеологическая школа',r:4.4,src:'Google Maps',link:'https://www.luchon.com/thermes'}
+]},
+{id:'dax',n:'Дакс',fn:'Дакс',lat:43.710,lng:-1.052,cities:['Дакс'],reg:'Франция',f:['sulfide','mud','radon'],foreign:true,desc:'Термальные сульфатно-хлоридные воды (до 65°C) с радоном + сульфидная грязь. Гинекология, неврология. Мягкий климат, рядом Атлантика.',access:'Самолётом до Бордо (~130 км) или Биаррица (~45 км).',sans:[
+  {st:'⭐⭐⭐⭐',n:'Thermes de Dax',note:'Сероводород + радон. Специализация — гинекология',r:4.3,src:'Google Maps',link:'https://www.ville-dax.fr/thermalisme'}
+]},
+{id:'aix_les_bains',n:'Экс-ле-Бен',fn:'Экс-ле-Бен',lat:45.694,lng:5.920,cities:['Экс-ле-Бен'],reg:'Франция (Савойя)',f:['sulfide','thermal'],foreign:true,desc:'Сероводородные источники (45–46°C). Савойские Альпы на берегу озера Бурже. Рядом Женева (30 мин).',access:'Самолётом до Женевы или Лиона, далее поездом.',sans:[
+  {st:'⭐⭐⭐⭐',n:'Thermes Chevalley Aix-les-Bains',note:'Сероводородные ванны, альпийское озеро',r:4.5,src:'Google Maps',link:'https://www.thermes-aix.com'}
+]},
+{id:'vichy',n:'Виши',fn:'Виши',lat:46.128,lng:3.426,cities:['Виши'],reg:'Франция',f:['carbonic'],foreign:true,desc:'50 углекислых источников от 16 до 66°C. Самый известный курорт Франции. Воды близки к Боржоми.',access:'Самолётом до Клермон-Феррана (~50 км) или Парижа, поездом.',sans:[
+  {st:'⭐⭐⭐⭐',n:'Vichy Célestins Spa & Thermes',note:'50 углекислых источников, французский курорт №1',r:4.4,src:'Google Maps',link:'https://www.vichy-spa-hotel.fr'}
+]},
+{id:'bad_austria',n:'Баден (Австрия)',fn:'Баден (близ Вены)',lat:48.006,lng:16.232,cities:['Баден'],reg:'Австрия',f:['sulfide','thermal'],foreign:true,desc:'Термальные сероводородные источники (до 36°C). Элегантный исторический курорт в 25 км от Вены.',access:'Самолётом до Вены (30 мин на поезде).',sans:[
+  {st:'⭐⭐⭐⭐',n:'Römertherme Baden',note:'Сероводородные термы, рядом с Веной',r:4.5,src:'Google Maps',link:'https://www.roemertherme.at'}
+]},
+{id:'bad_hall',n:'Бад-Халль',fn:'Бад-Халль',lat:48.043,lng:14.207,cities:['Бад-Халль'],reg:'Австрия',f:['iodine'],foreign:true,desc:'Мощнейшие в Центральной Европе источники йодобромных вод (50 мг йода/л). Восточные Альпы.',access:'Самолётом до Вены (~170 км) или Зальцбурга, далее поездом.',sans:[
+  {st:'⭐⭐⭐⭐',n:'Therme Mediterrana Bad Hall',note:'Йодобромные воды — уникальные в Европе',r:4.4,src:'Google Maps',link:'https://www.therme-bad-hall.at'}
+]},
+{id:'sirmione',n:'Сирмионе',fn:'Сирмионе',lat:45.490,lng:10.610,cities:['Сирмионе'],reg:'Италия (оз. Гарда)',f:['sulfide','mud'],foreign:true,desc:'Термальные сульфидные воды (69–70°C) из источников на дне озера Гарда. Замок Скалигеров. Рядом Верона.',access:'Самолётом до Вероны (~35 км), далее такси.',sans:[
+  {st:'⭐⭐⭐⭐',n:'Terme di Sirmione',note:'Сульфидные воды + источники в озере Гарда',r:4.6,src:'Google Maps',link:'https://www.termedisirmione.com'}
+]},
+{id:'salsomaggiore',n:'Сальсомаджоре-Терме',fn:'Сальсомаджоре-Терме',lat:44.817,lng:9.992,cities:['Сальсомаджоре-Терме'],reg:'Италия (Эмилия-Романья)',f:['iodine','chloride','mud'],foreign:true,desc:'Йодобромные воды — концентрация солей в 5 раз выше морской. Центр Берзьери в стиле ар-нуво. Рядом Парма.',access:'Самолётом до Милана или Болоньи, далее поездом.',sans:[
+  {st:'⭐⭐⭐⭐',n:'Terme di Salsomaggiore',note:'Йодобромные воды, центр ар-нуво Берзьери',r:4.3,src:'Google Maps',link:'https://www.termedisalsomaggiore.it'}
+]},
+{id:'palm_springs',n:'Палм-Спрингс',fn:'Палм-Спрингс',lat:33.830,lng:-116.545,cities:['Палм-Спрингс'],reg:'США (Калифорния)',f:['sulfide','thermal'],foreign:true,desc:'Термальные сероводородные источники (30–50°C) в пустыне Колорадо. 350 солнечных дней. Курорт голливудских звёзд.',access:'Самолётом до аэропорта Палм-Спрингс (PSP) или Лос-Анджелеса (~180 км).',sans:[
+  {st:'⭐⭐⭐⭐⭐',n:'Two Bunch Palms Resort & Spa',note:'Термальные источники в пустыне, 5 звёзд',r:4.7,src:'Google Maps',link:'https://www.twobunchpalms.com'},
+  {st:'⭐⭐⭐⭐',n:'Agua Caliente Spa Casino',note:'Традиционные термальные источники Агуа-Кальенте',r:4.4,src:'Google Maps',link:'https://www.aguacalientecasinos.com/spa'}
+]},
+{id:'saratoga_springs',n:'Саратога-Спрингс',fn:'Саратога-Спрингс',lat:43.082,lng:-73.786,cities:['Саратога-Спрингс'],reg:'США (Нью-Йорк)',f:['carbonic','chloride'],foreign:true,desc:'Углекисло-щелочные и хлоридно-натриевые воды. Один из старейших курортов США. Государственный бальнеологический институт с 1909 г.',access:'Самолётом до Нью-Йорка (~300 км), поездом Amtrak.',sans:[
+  {st:'⭐⭐⭐⭐',n:'Roosevelt Baths & Spa (State Parks)',note:'Государственные карбонатные ванны с 1935 г.',r:4.5,src:'Google Maps',link:'https://parks.ny.gov/parks/saratogaspa/details.aspx'}
+]},
+{id:'druskininkai',n:'Друскининкай',fn:'Друскининкай',lat:54.016,lng:23.974,cities:['Друскининкай'],reg:'Литва',f:['chloride','mud'],foreign:true,desc:'Хлоридные натриево-кальциевые воды («Сурутис») и торфяные грязи. Сосновый воздух. Близко к Калининграду.',access:'Самолётом до Вильнюса (~130 км), далее автобусом.',sans:[
+  {st:'⭐⭐⭐⭐',n:'Egle Sanatoriums (Друскининкай)',note:'Хлоридные воды, торфяные грязи, сосновый воздух',r:4.4,src:'Google Maps',link:'https://www.egle.lt'}
+]},
+{id:'atami',n:'Атами',fn:'Атами',lat:35.095,lng:139.074,cities:['Атами'],reg:'Япония (полуостров Идзу)',f:['thermal','chloride'],foreign:true,desc:'60+ горячих вулканических источников (до 90–108°C). Самый известный курорт онсэн Японии. Живописный залив.',access:'Скоростным поездом Шинкансэн из Токио (50 мин).',sans:[
+  {st:'⭐⭐⭐⭐⭐',n:'Atami Onsen Resort Complex',note:'Вулканические горячие источники, традиционный японский онсэн',r:4.7,src:'Google Maps',link:'https://www.atami-spa.com'}
+]}
 ];
 
-// ══════════════════════════════════════════════════
-// ИНИЦИАЛИЗАЦИЯ КАРТЫ
-// ══════════════════════════════════════════════════
-var map=L.map('map',{center:[52,50],zoom:4,minZoom:2,maxZoom:14,zoomControl:false});
-// CartoDB Voyager — работает надёжно
+// ═══ КАРТА ═══
+var map=L.map('map',{center:[48,30],zoom:3,minZoom:2,maxZoom:14,zoomControl:false});
 L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
-  attribution:'© OpenStreetMap © CARTO',
-  subdomains:'abcd',
-  maxZoom:19
+  attribution:'© OpenStreetMap © CARTO',subdomains:'abcd',maxZoom:19
 }).addTo(map);
 L.control.zoom({position:'bottomright'}).addTo(map);
 
-// ── Pie SVG ──
 function pie(factors,r){
-  r=r||20;
-  var n=factors.length,cx=r+5,cy=r+5,step=2*Math.PI/n,p='';
+  r=r||20;var n=factors.length,cx=r+5,cy=r+5,step=2*Math.PI/n,p='';
   for(var i=0;i<n;i++){
     var a0=i*step-Math.PI/2,a1=(i+1)*step-Math.PI/2;
     var x0=cx+r*Math.cos(a0),y0=cy+r*Math.sin(a0),x1=cx+r*Math.cos(a1),y1=cy+r*Math.sin(a1);
@@ -255,33 +593,34 @@ function pie(factors,r){
   return '<svg width="'+sz+'" height="'+sz+'" xmlns="http://www.w3.org/2000/svg"><circle cx="'+cx+'" cy="'+cy+'" r="'+(r+4)+'" fill="none" stroke="rgba(200,155,240,0.35)" stroke-width="1.5"/>'+p+'<circle cx="'+cx+'" cy="'+cy+'" r="'+(r*0.28)+'" fill="rgba(255,252,255,0.9)" stroke="rgba(200,155,240,0.5)" stroke-width="1.2"/></svg>';
 }
 
-// ── Маркеры курортов ──
+// Create markers
 RESORTS.forEach(function(resort){
   var r=20,sz=(r+5)*2;
-  // Pie
+  // Pie marker
   var pm=L.marker([resort.lat,resort.lng],{
     icon:L.divIcon({html:'<div class="resort-marker">'+pie(resort.f,r)+'</div>',className:'',iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]}),
     zIndexOffset:500
   });
   pm.on('click',function(){showPanel(resort);});
   pm.addTo(map);
-  // Подпись
+  // Label
   L.marker([resort.lat,resort.lng],{
     icon:L.divIcon({html:'<div class="resort-lbl">'+resort.n+(resort.foreign?' 🌍':'')+'</div>',className:'',iconSize:[1,1],iconAnchor:[-(sz/2-2),sz/2]}),
     interactive:false,zIndexOffset:499
   }).addTo(map);
-  // 3D иконка
-  var lmSvg=LM[resort.id]||LM['podmoskovye'];
+  // Low-poly 3D icon
+  var iconKey=ICON_MAP[resort.id]||'mountain_generic';
+  var iconSvg=ICONS[iconKey]||ICONS['mountain_generic'];
   L.marker([resort.lat,resort.lng],{
     icon:L.divIcon({
-      html:'<div class="lm3d-wrap" onclick="openR(\''+resort.id+'\')" title="'+resort.fn+'"><div class="lm3d-inner">'+lmSvg+'</div></div>',
-      className:'',iconSize:[80,80],iconAnchor:[40,114]
+      html:'<div class="lm" id="lm_'+resort.id+'" onclick="openR(\''+resort.id+'\')" title="'+resort.fn+'">'+iconSvg+'</div>',
+      className:'',iconSize:[72,80],iconAnchor:[36,112]
     }),
     zIndexOffset:498
   }).addTo(map);
 });
 
-// ── Города (только русские) ──
+// City labels (Russian only)
 var CITIES=[
   [55.7558,37.6176,'Москва',1],[59.9343,30.3351,'Санкт-Петербург',1],
   [55.0084,82.9357,'Новосибирск',1],[56.8519,60.6122,'Екатеринбург',1],
@@ -290,11 +629,13 @@ var CITIES=[
   [45.0360,38.9763,'Краснодар',0],[54.7388,55.9721,'Уфа',0],
   [56.0152,92.8672,'Красноярск',0],[58.0105,56.2502,'Пермь',0],
   [43.1332,131.9113,'Владивосток',0],[52.2978,104.2964,'Иркутск',0],
-  [51.5723,46.0059,'Саратов',0],[53.3547,83.7697,'Барнаул',0],
   [54.9885,73.3242,'Омск',0],[68.9585,33.0827,'Мурманск',0],
   [41.6938,44.8015,'Тбилиси',0],[48.2082,16.3738,'Вена',0],
   [48.1351,11.5820,'Мюнхен',0],[48.8566,2.3522,'Париж',0],
-  [41.9028,12.4964,'Рим',0],[48.6690,19.6990,'Братислава',0]
+  [41.9028,12.4964,'Рим',0],[48.6690,19.6990,'Братислава',0],
+  [50.0755,14.4378,'Прага',0],[35.6762,139.6503,'Токио',0],
+  [40.7128,-74.0060,'Нью-Йорк',0],[34.0522,-118.2437,'Лос-Анджелес',0],
+  [54.6892,25.2798,'Вильнюс',0]
 ];
 var cg={big:[],sm:[]};
 CITIES.forEach(function(c){
@@ -307,21 +648,58 @@ CITIES.forEach(function(c){
 });
 function uv(){
   var z=map.getZoom();
-  cg.big.forEach(function(x){if(z>=4){if(!map.hasLayer(x.d))x.d.addTo(map);if(!map.hasLayer(x.l))x.l.addTo(map);}else{if(map.hasLayer(x.d))map.removeLayer(x.d);if(map.hasLayer(x.l))map.removeLayer(x.l);}});
-  cg.sm.forEach(function(x){if(z>=6){if(!map.hasLayer(x.d))x.d.addTo(map);if(!map.hasLayer(x.l))x.l.addTo(map);}else{if(map.hasLayer(x.d))map.removeLayer(x.d);if(map.hasLayer(x.l))map.removeLayer(x.l);}});
+  cg.big.forEach(function(x){if(z>=3){if(!map.hasLayer(x.d))x.d.addTo(map);if(!map.hasLayer(x.l))x.l.addTo(map);}else{if(map.hasLayer(x.d))map.removeLayer(x.d);if(map.hasLayer(x.l))map.removeLayer(x.l);}});
+  cg.sm.forEach(function(x){if(z>=5){if(!map.hasLayer(x.d))x.d.addTo(map);if(!map.hasLayer(x.l))x.l.addTo(map);}else{if(map.hasLayer(x.d))map.removeLayer(x.d);if(map.hasLayer(x.l))map.removeLayer(x.l);}});
 }
 map.on('zoomend',uv);uv();
 
-// ── Панель ──
+// ═══ ANIMATION TRIGGERS ═══
+function playAnim(el){
+  if(!el)return;
+  el.classList.remove('anim');
+  void el.offsetWidth;
+  el.classList.add('anim');
+}
+// Auto-play on load
+setTimeout(function(){
+  document.querySelectorAll('.lm').forEach(function(e){e.classList.add('anim');});
+},400);
+// Re-play on hover
+document.addEventListener('pointerover',function(e){
+  var lm=e.target.closest('.lm');
+  if(lm)playAnim(lm);
+});
+
+// ═══ PANEL ═══
 var panel=document.getElementById('panel'),pcont=document.getElementById('pcont');
 function sf(r){var f=Math.floor(r),h=(r-f)>=0.25?1:0;return'★'.repeat(f)+(h?'½':'')+'☆'.repeat(5-f-h);}
 function showPanel(resort){
   var badges=resort.f.map(function(k){return'<div class="fbd"><div class="fdot" style="background:'+F[k].c+'"></div>'+F[k].n+'</div>';}).join('');
-  var sans=resort.sans.map(function(s){return'<div class="sc"><div class="sn">'+s.st+' '+s.n+'</div><div class="sr"><span style="color:#e8a0c0;font-size:11px">'+sf(s.r)+'</span><span class="rat">'+s.r+'</span><span class="rsrc">'+s.src+'</span></div>'+(s.note?'<div class="snote">'+s.note+'</div>':'')+'</div>';}).join('');
+  var sans=resort.sans.map(function(s){
+    var linkHtml=s.link?'<div class="slink">'+
+      (resort.foreign?'Открыть на Google Maps':'Открыть на Яндекс Картах')+
+    '</div>':'';
+    return '<div class="sc"'+(s.link?' onclick="window.open(\''+s.link+'\',\'_blank\')"':'')+'>'+
+      '<div class="sn">'+s.st+' '+s.n+'</div>'+
+      '<div class="sr"><span style="color:#e8a0c0;font-size:11px">'+sf(s.r)+'</span>'+
+      '<span class="rat">'+s.r+'</span><span class="rsrc">'+s.src+'</span></div>'+
+      (s.note?'<div class="snote">'+s.note+'</div>':'')+
+      linkHtml+'</div>';
+  }).join('');
   var cl=resort.cities&&resort.cities.length>1?'<br><small style="color:#c090d0">Объединяет: '+resort.cities.join(' · ')+'</small>':'';
   var fb=resort.foreign?'<span class="fbadge">🌍 Зарубежный</span>':'';
-  pcont.innerHTML='<div class="pt">'+resort.fn+fb+cl+'</div><div class="pr">📍 '+resort.reg+'</div><div class="fbs">'+badges+'</div><div class="pd">'+resort.desc+'</div><div class="st">Санатории</div>'+sans+'<div class="st">Как добраться</div><div class="hw">✈ '+resort.access+'</div><div style="height:16px"></div>';
+  pcont.innerHTML='<div class="pt">'+resort.fn+fb+cl+'</div>'+
+    '<div class="pr">📍 '+resort.reg+'</div>'+
+    '<div class="fbs">'+badges+'</div>'+
+    '<div class="pd">'+resort.desc+'</div>'+
+    '<div class="st">Санатории</div>'+sans+
+    '<div class="st">Как добраться</div>'+
+    '<div class="hw">✈ '+resort.access+'</div>'+
+    '<div style="height:16px"></div>';
   panel.classList.add('open');map.dragging.disable();
+  // Play animation for this resort's icon
+  var lmEl=document.getElementById('lm_'+resort.id);
+  if(lmEl)playAnim(lmEl);
 }
 function closePanel(){panel.classList.remove('open');map.dragging.enable();}
 document.getElementById('pc').onclick=closePanel;
@@ -329,15 +707,14 @@ document.getElementById('ph').onclick=closePanel;
 map.on('click',function(){if(panel.classList.contains('open'))closePanel();});
 window.openR=function(id){var r=RESORTS.find(function(x){return x.id===id;});if(r)showPanel(r);};
 
-// Легенда
+// Legend
 var lt=document.getElementById('ltog'),lb=document.getElementById('lbody'),lo=true;
 lt.onclick=function(){lo=!lo;lb.classList.toggle('h',!lo);lt.classList.toggle('c',!lo);};
 
 // Toast
 function showToast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3500);}
-setTimeout(function(){showToast('🌸 Нажмите на иконку или кружок для информации о курорте');},1800);
+setTimeout(function(){showToast('🌸 Нажмите на иконку или кружок — информация о курорте и ссылки');},1800);
 
-// Telegram
 try{if(window.Telegram&&window.Telegram.WebApp){window.Telegram.WebApp.ready();window.Telegram.WebApp.expand();}}catch(e){}
 </script>
 </body>
